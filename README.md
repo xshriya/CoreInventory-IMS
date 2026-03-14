@@ -1,8 +1,3 @@
-Here's the updated README without the API Endpoints section:
-
----
-
-```markdown
 # CoreInventory-IMS
 
 **CoreInventory** is a web-based Inventory Management System designed to digitize and streamline warehouse operations. Built for the **Odoo x Indus University Hackathon '26**, it replaces manual registers and Excel sheets with a centralized, real-time application for tracking receipts, deliveries, and stock movements.
