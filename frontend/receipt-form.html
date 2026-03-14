@@ -556,7 +556,7 @@ function collectFormData() {
             const product = productInput.value.trim();
             const quantity = parseInt(quantityInput.value) || 0;
             if (product && quantity > 0) {
-                products.push({ product, quantity });
+                products.push({ product_name: product, quantity: quantity });
             }
         }
     });

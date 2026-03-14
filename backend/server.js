@@ -307,7 +307,7 @@ app.post('/api/receipts', (req, res) => {
                         } else {
                             insertStock.run(productId, item.quantity);
                         }
-                        insertMovement.run(`REC/${receiptId}`, productId, supplier || 'External', item.quantity);
+                        insertMovement.run(`REC/${receiptId}-${productId}`, productId, supplier || 'External', item.quantity);
                     }
                 }
             }
@@ -384,7 +384,7 @@ app.put('/api/receipts/:id', (req, res) => {
                             } else {
                                 insertStock.run(productId, item.quantity);
                             }
-                            insertMovement.run(`REC/${id}`, productId, supplier || 'External', item.quantity);
+                            insertMovement.run(`REC/${id}-${productId}`, productId, supplier || 'External', item.quantity);
                         }
                     }
                 }
@@ -518,7 +518,7 @@ app.post('/api/deliveries', (req, res) => {
                     
                     if (status === 'done') {
                         updateStock.run(item.quantity, productId);
-                        insertMovement.run(`DEL/${deliveryId}`, productId, from_location || 'Warehouse', to_location || 'External', item.quantity);
+                        insertMovement.run(`DEL/${deliveryId}-${productId}`, productId, from_location || 'Warehouse', to_location || 'External', item.quantity);
                     }
                 }
             }
@@ -595,7 +595,7 @@ app.put('/api/deliveries/:id', (req, res) => {
                         
                         if (status === 'done' && existing.status !== 'done') {
                             updateStock.run(item.quantity, productId);
-                            insertMovement.run(`DEL/${id}`, productId, from_location || 'Warehouse', to_location || 'External', item.quantity);
+                            insertMovement.run(`DEL/${id}-${productId}`, productId, from_location || 'Warehouse', to_location || 'External', item.quantity);
                         }
                     }
                 }

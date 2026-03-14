@@ -204,7 +204,10 @@ View Details <span class="material-symbols-outlined text-xs">arrow_forward</span
 <script src="auth-check.js"></script>
 <script>
     // Navigation functionality
-    document.addEventListener('DOMContentLoaded', function() {
+    document.addEventListener('DOMContentLoaded', async function() {
+        // Load real data from API
+        await loadDashboardData();
+        
         // Mobile menu toggle
     const mobileMenuButton = document.querySelector('button[class*="lg:hidden"]');
     const sidebar = document.querySelector('aside');
@@ -276,9 +279,6 @@ View Details <span class="material-symbols-outlined text-xs">arrow_forward</span
         // Dashboard card interactions
         initializeDashboardCards();
         
-        // Real-time data simulation
-        startRealTimeUpdates();
-        
         // Search functionality
         initializeSearch();
         
@@ -288,6 +288,74 @@ View Details <span class="material-symbols-outlined text-xs">arrow_forward</span
         // Quick actions
         initializeQuickActions();
     });
+
+    // Load dashboard data from API
+    async function loadDashboardData() {
+        try {
+            // Fetch receipts
+            const receipts = await api.getReceipts();
+            const receiptDrafts = receipts.filter(r => r.status === 'draft' || r.status === 'ready').length;
+            const receiptDone = receipts.filter(r => r.status === 'done').length;
+            
+            document.getElementById('receiptsToReceive').textContent = receiptDrafts;
+            document.getElementById('receiptsCompleted').textContent = receiptDone;
+            document.getElementById('receiptsTotal').textContent = `${receipts.length} total receipts`;
+            
+            // Fetch deliveries
+            const deliveries = await api.getDeliveries();
+            const deliveryDrafts = deliveries.filter(d => d.status === 'draft').length;
+            const deliveryReady = deliveries.filter(d => d.status === 'ready').length;
+            const deliveryDone = deliveries.filter(d => d.status === 'done').length;
+            
+            document.getElementById('deliveriesToDeliver').textContent = deliveryDrafts;
+            document.getElementById('deliveriesReady').textContent = deliveryReady;
+            document.getElementById('deliveriesDone').textContent = deliveryDone;
+            document.getElementById('deliveriesTotal').textContent = `${deliveries.length} total deliveries`;
+            
+            // Fetch recent movements
+            const movements = await api.getMovements();
+            displayRecentMoves(movements.slice(0, 5));
+            
+            // Animate numbers
+            animateNumbers();
+        } catch (err) {
+            console.error('Failed to load dashboard data:', err);
+        }
+    }
+
+    // Display recent moves
+    function displayRecentMoves(movements) {
+        const container = document.querySelector('.space-y-4');
+        if (!container) return;
+        
+        if (movements.length === 0) {
+            container.innerHTML = `
+                <div class="flex items-center gap-3">
+                    <div class="size-2 rounded-full bg-slate-300"></div>
+                    <p class="text-xs font-bold text-slate-400">No recent activity</p>
+                    <p class="text-[10px] text-slate-400">--</p>
+                </div>
+            `;
+            return;
+        }
+        
+        container.innerHTML = movements.map(m => {
+            const isReceipt = m.movement_type === 'receipt';
+            const color = isReceipt ? 'status-green' : 'primary';
+            const icon = isReceipt ? 'download' : 'upload';
+            const location = isReceipt ? m.from_location : m.to_location;
+            
+            return `
+                <div class="flex items-center gap-3">
+                    <div class="size-2 rounded-full bg-${color}"></div>
+                    <span class="material-symbols-outlined text-xs text-${color}">${icon}</span>
+                    <p class="text-xs font-bold text-slate-700 flex-1">${m.reference || 'MOV'}</p>
+                    <p class="text-[10px] text-slate-400">${location || 'N/A'}</p>
+                    <p class="text-[10px] font-bold text-${color}">${m.quantity}</p>
+                </div>
+            `;
+        }).join('');
+    }
 
     // Dashboard card interactions
     function initializeDashboardCards() {
@@ -315,9 +383,6 @@ View Details <span class="material-symbols-outlined text-xs">arrow_forward</span
                 });
             }
         });
-
-        // Animate numbers on load
-        animateNumbers();
     }
 
     // Animate KPI numbers
@@ -326,9 +391,9 @@ View Details <span class="material-symbols-outlined text-xs">arrow_forward</span
         
         numberElements.forEach(element => {
             const finalValue = parseInt(element.textContent);
-            if (!isNaN(finalValue)) {
+            if (!isNaN(finalValue) && finalValue > 0) {
                 let currentValue = 0;
-                const increment = finalValue / 30;
+                const increment = Math.max(1, finalValue / 20);
                 const timer = setInterval(() => {
                     currentValue += increment;
                     if (currentValue >= finalValue) {
@@ -342,73 +407,6 @@ View Details <span class="material-symbols-outlined text-xs">arrow_forward</span
         });
     }
 
-    // Real-time updates simulation
-    function startRealTimeUpdates() {
-        // Update "last updated" time
-        const updateLastUpdatedTime = () => {
-            const timeElements = document.querySelectorAll('[data-time]');
-            timeElements.forEach(element => {
-                const minutes = parseInt(element.dataset.time) || 0;
-                element.dataset.time = minutes + 1;
-                
-                if (minutes < 60) {
-                    element.textContent = `${minutes} min ago`;
-                } else {
-                    const hours = Math.floor(minutes / 60);
-                    element.textContent = `${hours} hr ago`;
-                }
-            });
-        };
-
-        // Update every minute
-        setInterval(updateLastUpdatedTime, 60000);
-
-        // Simulate real-time alerts
-        setInterval(() => {
-            if (Math.random() > 0.7) { // 30% chance every 30 seconds
-                addNewActivity();
-            }
-        }, 30000);
-    }
-
-    // Add new activity to recent moves
-    function addNewActivity() {
-        const activities = [
-            { text: 'New shipment received', type: 'success' },
-            { text: 'Delivery dispatched', type: 'primary' },
-            { text: 'Inventory updated', type: 'info' },
-            { text: 'Alert: Low stock detected', type: 'warning' }
-        ];
-
-        const randomActivity = activities[Math.floor(Math.random() * activities.length)];
-        const recentMovesContainer = document.querySelector('.space-y-4');
-        
-        if (recentMovesContainer) {
-            const newActivity = document.createElement('div');
-            newActivity.className = 'flex items-center gap-3 opacity-0 transition-opacity duration-500';
-            newActivity.innerHTML = `
-                <div class="size-2 rounded-full bg-${randomActivity.type === 'success' ? 'status-green' : randomActivity.type === 'warning' ? 'late-red' : 'primary'}"></div>
-                <div class="flex-1">
-                    <p class="text-xs font-bold text-slate-700">${randomActivity.text}</p>
-                    <p class="text-[10px] text-slate-400">Just now</p>
-                </div>
-            `;
-            
-            recentMovesContainer.insertBefore(newActivity, recentMovesContainer.firstChild);
-            
-            // Fade in animation
-            setTimeout(() => {
-                newActivity.classList.remove('opacity-0');
-            }, 100);
-            
-            // Remove oldest activity if more than 4
-            const activities = recentMovesContainer.children;
-            if (activities.length > 4) {
-                recentMovesContainer.removeChild(activities[activities.length - 1]);
-            }
-        }
-    }
-
     // Search functionality
     function initializeSearch() {
         const searchInput = document.querySelector('input[placeholder*="search"]');
@@ -418,9 +416,7 @@ View Details <span class="material-symbols-outlined text-xs">arrow_forward</span
                 const query = e.target.value.toLowerCase();
                 
                 if (query.length > 2) {
-                    // Simulate search results
                     console.log(`Searching for: ${query}`);
-                    // Implement actual search logic here
                 }
             });
 
@@ -430,7 +426,6 @@ View Details <span class="material-symbols-outlined text-xs">arrow_forward</span
                     const query = this.value;
                     if (query) {
                         console.log(`Executing search for: ${query}`);
-                        // Implement search navigation here
                     }
                 }
             });
@@ -443,16 +438,13 @@ View Details <span class="material-symbols-outlined text-xs">arrow_forward</span
         
         if (notificationButton) {
             notificationButton.addEventListener('click', function() {
-                // Toggle notification panel
                 console.log('Notification panel clicked');
-                // Implement notification dropdown here
             });
         }
     }
 
     // Quick actions
     function initializeQuickActions() {
-        // Quick action buttons (if any exist)
         const actionButtons = document.querySelectorAll('button[class*="quick"]');
         
         actionButtons.forEach(button => {
@@ -460,7 +452,6 @@ View Details <span class="material-symbols-outlined text-xs">arrow_forward</span
                 const action = this.textContent.trim();
                 console.log(`Quick action: ${action}`);
                 
-                // Add click feedback
                 this.style.transform = 'scale(0.95)';
                 setTimeout(() => {
                     this.style.transform = 'scale(1)';
