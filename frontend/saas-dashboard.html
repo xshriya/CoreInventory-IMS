@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#008B8B",
+                        "background-main": "#FDFBF6",
+                        "background-card": "#FFFFF5",
+                        "slate-grey": "#4A5568",
+                        "late-red": "#C25252",
+                        "status-green": "#6A966A"
+                    },
+                    fontFamily: {
+                        "display": ["Space Grotesk"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style type="text/tailwindcss">
+        :root {
+            --primary: #008B8B;
+            --bg-main: #FDFBF6;
+            --bg-card: #FFFFF5;
+            --late-red: #C25252;
+            --status-green: #6A966A;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        body {
+            animation: fadeIn 0.2s ease-in-out;
+        }
+    </style>
+<title>LogisticsPro Dashboard</title>
+</head>
+<body class="bg-background-main font-display text-slate-800 min-h-screen">
+<div class="flex h-screen flex-col">
+<header class="flex items-center justify-between border-b border-primary/10 px-3 sm:px-4 md:px-6 lg:px-8 py-3 sm:py-4 bg-background-main sticky top-0 z-40">
+<div class="flex items-center gap-2 sm:gap-3 text-primary">
+<span class="material-symbols-outlined text-2xl sm:text-3xl">package_2</span>
+<h2 class="text-lg sm:text-xl font-bold tracking-tight">LogisticsPro</h2>
+</div>
+<div class="flex items-center gap-2 sm:gap-3">
+<div class="text-right hidden sm:block">
+<p class="text-xs font-bold text-slate-700" id="userNameDisplay">Admin Terminal</p>
+<p class="text-[10px] text-slate-400 uppercase tracking-wider">Logistics HQ</p>
+</div>
+<div class="size-8 sm:size-10 rounded-full border-2 border-primary bg-cover bg-center" data-alt="User profile avatar icon" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAY04hioCw3DcSV_nhxUETggG94VAfJ1654paCWJtB4cFbLGVAa0BmmbUew_Uj-0A0TVm_uO5p7mFVYN34mtMfpKgr_RwR90IPSNU06qTOe3ItY9a1aFJ8czN0ITXa3ejOlVWX_yq0_hLjluSl77OUpiXooaSnUKLdUVbR1oDVmwEz9H8Td-Eq0WHDnxO9rtG1rHsTtWlsLnKGbTGPH5sG8D3TJh7bX-Lxxy-1pHt6JnemxpPCsCdgFKEUXUU0nxB5RHZN4ax0F9DOc')"></div>
+</div>
+</header>
+<main class="flex-1 flex overflow-hidden">
+<!-- Mobile menu button -->
+<button class="lg:hidden fixed top-20 left-4 z-50 p-3 bg-primary text-white rounded-lg shadow-lg" onclick="toggleMobileSidebar()">
+<span class="material-symbols-outlined">menu</span>
+</button>
+
+<!-- Mobile sidebar overlay -->
+<div id="mobileSidebarOverlay" class="lg:hidden fixed inset-0 bg-black bg-opacity-50 z-40 hidden" onclick="closeMobileSidebar()"></div>
+
+<aside id="sidebar" class="fixed lg:relative left-0 top-0 h-full w-64 sm:w-72 border-r border-primary/5 p-4 sm:p-6 hidden lg:flex flex-col gap-6 sm:gap-8 bg-background-main z-50 lg:z-auto transform -translate-x-full lg:translate-x-0 transition-transform duration-300">
+<section>
+<h3 class="text-xs font-bold text-primary/70 uppercase tracking-[0.2em] mb-6">Navigation</h3>
+<div class="flex flex-col gap-1">
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl bg-primary text-white font-bold" href="saas-dashboard.html">
+<span class="material-symbols-outlined text-xl">grid_view</span>
+<span>Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-primary/5 text-slate-600 transition-colors" href="delivery.html">
+<span class="material-symbols-outlined text-xl">local_shipping</span>
+<span>Operations</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-primary/5 text-slate-600 transition-colors" href="stock.html">
+<span class="material-symbols-outlined text-xl">warehouse</span>
+<span>Stock</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-primary/5 text-slate-600 transition-colors" href="move-history.html">
+<span class="material-symbols-outlined text-xl">history</span>
+<span>Move History</span>
+</a>
+<div class="border-t border-primary/10 my-2"></div>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-primary/5 text-slate-600 transition-colors" href="settings.html">
+<span class="material-symbols-outlined text-xl">settings</span>
+<span>Settings</span>
+<span class="material-symbols-outlined text-base text-slate-400">expand_more</span>
+</a>
+<div class="flex flex-col gap-1 pl-8">
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-primary/5 text-slate-600 transition-colors" href="warehouse.html">
+<span class="material-symbols-outlined text-xl">store</span>
+<span>Warehouse</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-primary/5 text-slate-600 transition-colors" href="location.html">
+<span class="material-symbols-outlined text-xl">place</span>
+<span>Locations</span>
+</a>
+</div>
+<div class="border-t border-primary/10 my-2"></div>
+<button onclick="logout()" class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-late-red/5 text-slate-600 hover:text-late-red transition-colors w-full text-left">
+<span class="material-symbols-outlined text-xl">logout</span>
+<span>Logout</span>
+</button>
+</div>
+</section>
+</aside>
+<section class="flex-1 overflow-y-auto p-4 sm:p-6 lg:p-8 xl:p-12 lg:ml-0">
+<header class="mb-6 sm:mb-8 lg:mb-12">
+<h1 class="text-2xl sm:text-3xl lg:text-4xl xl:text-5xl font-black tracking-tighter mb-2 text-slate-800">Inventory Overview</h1>
+<p class="text-slate-500 text-sm sm:text-base lg:text-lg">Real-time logistics tracking and fleet management terminal.</p>
+</header>
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 lg:gap-8">
+<div class="bg-background-card border border-primary/10 rounded-xl p-4 sm:p-6 lg:p-8 flex flex-col gap-4 sm:gap-6 relative overflow-hidden group hover:border-primary/30 transition-colors shadow-sm">
+<div class="absolute -right-8 -top-8 size-32 bg-primary/5 rounded-full blur-3xl"></div>
+<div class="flex items-start justify-between">
+<div class="flex flex-col gap-1">
+<span class="material-symbols-outlined text-primary text-4xl mb-4">download_done</span>
+<h3 class="text-2xl font-bold text-slate-800">Receipts</h3>
+</div>
+<span class="text-xs font-bold uppercase tracking-widest text-primary bg-primary/10 px-3 py-1 rounded-full">Inbound</span>
+</div>
+<div class="grid grid-cols-2 gap-4">
+<a href="receipts.html?status=draft" class="p-4 bg-background-main rounded-lg border border-primary/5 hover:border-primary/30 transition-colors cursor-pointer block">
+<p class="text-3xl font-bold text-primary" id="receiptsToReceive">0</p>
+<p class="text-sm text-slate-500">To Receive</p>
+</a>
+<a href="receipts.html?status=done" class="p-4 bg-status-green/5 rounded-lg border border-status-green/10 hover:border-status-green/30 transition-colors cursor-pointer block">
+<p class="text-3xl font-bold text-status-green" id="receiptsCompleted">0</p>
+<p class="text-sm text-slate-500">Completed</p>
+</a>
+</div>
+<div class="mt-auto pt-6 border-t border-primary/5 flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-sm text-primary/60">analytics</span>
+<span class="text-sm font-medium text-slate-600" id="receiptsTotal">0 total receipts</span>
+</div>
+<a href="receipts.html" class="text-primary hover:underline text-sm font-bold flex items-center gap-1">
+View Details <span class="material-symbols-outlined text-xs">arrow_forward</span>
+</a>
+</div>
+</div>
+<div class="bg-background-card border border-primary/10 rounded-xl p-4 sm:p-6 lg:p-8 flex flex-col gap-4 sm:gap-6 relative overflow-hidden group hover:border-primary/30 transition-colors shadow-sm">
+<div class="absolute -right-8 -top-8 size-32 bg-primary/5 rounded-full blur-3xl"></div>
+<div class="flex items-start justify-between">
+<div class="flex flex-col gap-1">
+<span class="material-symbols-outlined text-primary text-4xl mb-4">upload_file</span>
+<h3 class="text-2xl font-bold text-slate-800">Deliveries</h3>
+</div>
+<span class="text-xs font-bold uppercase tracking-widest text-primary bg-primary/10 px-3 py-1 rounded-full">Outbound</span>
+</div>
+<div class="grid grid-cols-3 gap-4">
+<a href="delivery.html?status=draft" class="p-4 bg-background-main rounded-lg border border-primary/5 hover:border-primary/30 transition-colors cursor-pointer block">
+<p class="text-3xl font-bold text-primary" id="deliveriesToDeliver">0</p>
+<p class="text-sm text-slate-500">To Deliver</p>
+</a>
+<a href="delivery.html?status=ready" class="p-4 bg-status-green/5 rounded-lg border border-status-green/10 hover:border-status-green/30 transition-colors cursor-pointer block">
+<p class="text-3xl font-bold text-status-green" id="deliveriesReady">0</p>
+<p class="text-sm text-slate-500">Ready</p>
+</a>
+<a href="delivery.html?status=done" class="p-4 bg-background-main rounded-lg border border-primary/5 hover:border-primary/30 transition-colors cursor-pointer block">
+<p class="text-3xl font-bold text-slate-700" id="deliveriesDone">0</p>
+<p class="text-sm text-slate-500">Done</p>
+</a>
+</div>
+<div class="mt-auto pt-6 border-t border-primary/5 flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-sm text-primary/60">analytics</span>
+<span class="text-sm font-medium text-slate-600" id="deliveriesTotal">0 total deliveries</span>
+</div>
+<a href="delivery.html" class="text-primary hover:underline text-sm font-bold flex items-center gap-1">
+View Details <span class="material-symbols-outlined text-xs">arrow_forward</span>
+</a>
+</div>
+</div>
+</div>
+<div class="mt-8 sm:mt-10 lg:mt-12 grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8">
+<div class="h-48 sm:h-56 lg:h-64 rounded-xl border border-primary/5 bg-background-card p-4 sm:p-6 flex flex-col gap-3 sm:gap-4 shadow-sm">
+<h4 class="font-bold text-primary text-sm uppercase tracking-widest">Recent Moves</h4>
+<div class="space-y-4">
+<div class="flex items-center gap-3">
+<div class="size-2 rounded-full bg-slate-300"></div>
+<p class="text-xs font-bold text-slate-400">No recent activity</p>
+<p class="text-[10px] text-slate-400">--</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+</main>
+</div>
+
+<script src="api.js"></script>
+<script src="auth-check.js"></script>
+<script>
+    // Navigation functionality
+    document.addEventListener('DOMContentLoaded', function() {
+        // Mobile menu toggle
+    const mobileMenuButton = document.querySelector('button[class*="lg:hidden"]');
+    const sidebar = document.querySelector('aside');
+    
+    if (mobileMenuButton && sidebar) {
+        mobileMenuButton.addEventListener('click', function() {
+            sidebar.classList.toggle('hidden');
+            sidebar.classList.toggle('fixed');
+            sidebar.classList.toggle('inset-0');
+            sidebar.classList.toggle('z-50');
+            sidebar.classList.toggle('bg-background-main');
+        });
+    }
+
+    // Mobile sidebar functions
+    function toggleMobileSidebar() {
+        const sidebar = document.getElementById('sidebar');
+        const overlay = document.getElementById('mobileSidebarOverlay');
+        
+        if (sidebar && overlay) {
+            sidebar.classList.toggle('-translate-x-full');
+            sidebar.classList.toggle('translate-x-0');
+            overlay.classList.toggle('hidden');
+        }
+    }
+
+    function closeMobileSidebar() {
+        const sidebar = document.getElementById('sidebar');
+        const overlay = document.getElementById('mobileSidebarOverlay');
+        
+        if (sidebar && overlay) {
+            sidebar.classList.add('-translate-x-full');
+            sidebar.classList.remove('translate-x-0');
+            overlay.classList.add('hidden');
+        }
+    }
+
+    // Make functions globally accessible
+    window.toggleMobileSidebar = toggleMobileSidebar;
+    window.closeMobileSidebar = closeMobileSidebar;
+
+        // Active navigation highlighting
+        const navLinks = document.querySelectorAll('nav a');
+        const currentPath = window.location.pathname.split('/').pop() || 'saas-dashboard.html';
+        
+        navLinks.forEach(link => {
+            const href = link.getAttribute('href');
+            if (href === currentPath || (currentPath === '' && href === '#')) {
+                link.classList.remove('text-slate-500');
+                link.classList.add('text-primary', 'font-semibold', 'border-b-2', 'border-primary', 'pb-1');
+            }
+        });
+
+        // Sidebar navigation
+        const sidebarLinks = document.querySelectorAll('aside a');
+        sidebarLinks.forEach(link => {
+            link.addEventListener('click', function(e) {
+                const href = this.getAttribute('href');
+                if (href && href !== '#') {
+                    // Add loading state
+                    this.style.opacity = '0.7';
+                    setTimeout(() => {
+                        window.location.href = href;
+                    }, 200);
+                }
+            });
+        });
+
+        // Dashboard card interactions
+        initializeDashboardCards();
+        
+        // Real-time data simulation
+        startRealTimeUpdates();
+        
+        // Search functionality
+        initializeSearch();
+        
+        // Notifications
+        initializeNotifications();
+        
+        // Quick actions
+        initializeQuickActions();
+    });
+
+    // Dashboard card interactions
+    function initializeDashboardCards() {
+        const cards = document.querySelectorAll('.bg-background-card');
+        
+        cards.forEach(card => {
+            // Hover effects
+            card.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-2px)';
+                this.style.boxShadow = '0 10px 25px -5px rgba(0, 139, 139, 0.1)';
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0)';
+                this.style.boxShadow = '';
+            });
+
+            // Click tracking
+            const viewDetailsBtn = card.querySelector('a[href*="html"]');
+            if (viewDetailsBtn) {
+                viewDetailsBtn.addEventListener('click', function(e) {
+                    const cardTitle = card.querySelector('h3')?.textContent || 'Unknown';
+                    console.log(`Navigating to ${cardTitle} details`);
+                    // Analytics tracking could be added here
+                });
+            }
+        });
+
+        // Animate numbers on load
+        animateNumbers();
+    }
+
+    // Animate KPI numbers
+    function animateNumbers() {
+        const numberElements = document.querySelectorAll('.text-3xl');
+        
+        numberElements.forEach(element => {
+            const finalValue = parseInt(element.textContent);
+            if (!isNaN(finalValue)) {
+                let currentValue = 0;
+                const increment = finalValue / 30;
+                const timer = setInterval(() => {
+                    currentValue += increment;
+                    if (currentValue >= finalValue) {
+                        element.textContent = finalValue;
+                        clearInterval(timer);
+                    } else {
+                        element.textContent = Math.floor(currentValue);
+                    }
+                }, 50);
+            }
+        });
+    }
+
+    // Real-time updates simulation
+    function startRealTimeUpdates() {
+        // Update "last updated" time
+        const updateLastUpdatedTime = () => {
+            const timeElements = document.querySelectorAll('[data-time]');
+            timeElements.forEach(element => {
+                const minutes = parseInt(element.dataset.time) || 0;
+                element.dataset.time = minutes + 1;
+                
+                if (minutes < 60) {
+                    element.textContent = `${minutes} min ago`;
+                } else {
+                    const hours = Math.floor(minutes / 60);
+                    element.textContent = `${hours} hr ago`;
+                }
+            });
+        };
+
+        // Update every minute
+        setInterval(updateLastUpdatedTime, 60000);
+
+        // Simulate real-time alerts
+        setInterval(() => {
+            if (Math.random() > 0.7) { // 30% chance every 30 seconds
+                addNewActivity();
+            }
+        }, 30000);
+    }
+
+    // Add new activity to recent moves
+    function addNewActivity() {
+        const activities = [
+            { text: 'New shipment received', type: 'success' },
+            { text: 'Delivery dispatched', type: 'primary' },
+            { text: 'Inventory updated', type: 'info' },
+            { text: 'Alert: Low stock detected', type: 'warning' }
+        ];
+
+        const randomActivity = activities[Math.floor(Math.random() * activities.length)];
+        const recentMovesContainer = document.querySelector('.space-y-4');
+        
+        if (recentMovesContainer) {
+            const newActivity = document.createElement('div');
+            newActivity.className = 'flex items-center gap-3 opacity-0 transition-opacity duration-500';
+            newActivity.innerHTML = `
+                <div class="size-2 rounded-full bg-${randomActivity.type === 'success' ? 'status-green' : randomActivity.type === 'warning' ? 'late-red' : 'primary'}"></div>
+                <div class="flex-1">
+                    <p class="text-xs font-bold text-slate-700">${randomActivity.text}</p>
+                    <p class="text-[10px] text-slate-400">Just now</p>
+                </div>
+            `;
+            
+            recentMovesContainer.insertBefore(newActivity, recentMovesContainer.firstChild);
+            
+            // Fade in animation
+            setTimeout(() => {
+                newActivity.classList.remove('opacity-0');
+            }, 100);
+            
+            // Remove oldest activity if more than 4
+            const activities = recentMovesContainer.children;
+            if (activities.length > 4) {
+                recentMovesContainer.removeChild(activities[activities.length - 1]);
+            }
+        }
+    }
+
+    // Search functionality
+    function initializeSearch() {
+        const searchInput = document.querySelector('input[placeholder*="search"]');
+        
+        if (searchInput) {
+            searchInput.addEventListener('input', function(e) {
+                const query = e.target.value.toLowerCase();
+                
+                if (query.length > 2) {
+                    // Simulate search results
+                    console.log(`Searching for: ${query}`);
+                    // Implement actual search logic here
+                }
+            });
+
+            searchInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    const query = this.value;
+                    if (query) {
+                        console.log(`Executing search for: ${query}`);
+                        // Implement search navigation here
+                    }
+                }
+            });
+        }
+    }
+
+    // Notifications
+    function initializeNotifications() {
+        const notificationButton = document.querySelector('button[class*="notifications"]');
+        
+        if (notificationButton) {
+            notificationButton.addEventListener('click', function() {
+                // Toggle notification panel
+                console.log('Notification panel clicked');
+                // Implement notification dropdown here
+            });
+        }
+    }
+
+    // Quick actions
+    function initializeQuickActions() {
+        // Quick action buttons (if any exist)
+        const actionButtons = document.querySelectorAll('button[class*="quick"]');
+        
+        actionButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const action = this.textContent.trim();
+                console.log(`Quick action: ${action}`);
+                
+                // Add click feedback
+                this.style.transform = 'scale(0.95)';
+                setTimeout(() => {
+                    this.style.transform = 'scale(1)';
+                }, 150);
+            });
+        });
+    }
+
+    // Keyboard shortcuts
+    document.addEventListener('keydown', function(e) {
+        // Ctrl/Cmd + K for search
+        if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
+            e.preventDefault();
+            const searchInput = document.querySelector('input[placeholder*="search"]');
+            if (searchInput) {
+                searchInput.focus();
+            }
+        }
+        
+        // Escape to close mobile menu
+        if (e.key === 'Escape') {
+            const sidebar = document.querySelector('aside');
+            if (sidebar && !sidebar.classList.contains('hidden')) {
+                sidebar.classList.add('hidden');
+            }
+        }
+    });
+
+    // Profile menu
+    const profileMenu = document.querySelector('.relative.group');
+    if (profileMenu) {
+        profileMenu.addEventListener('click', function(e) {
+            e.stopPropagation();
+            // Toggle profile dropdown
+            console.log('Profile menu clicked');
+        });
+    }
+
+    // Live map interaction
+    const mapContainer = document.querySelector('[data-location]');
+    if (mapContainer) {
+        mapContainer.addEventListener('click', function() {
+            console.log(`Map clicked - Location: ${this.dataset.location || 'Unknown'}`);
+            // Implement map interaction here
+        });
+    }
+
+    // Export/Print functionality
+    function exportDashboard() {
+        console.log('Exporting dashboard data...');
+        // Implement export functionality
+    }
+
+    // Make export function globally accessible
+    window.exportDashboard = exportDashboard;
+
+    // Performance monitoring
+    console.log('Dashboard initialized successfully');
+
+    // Display user info - wrapped in DOMContentLoaded to ensure auth-check.js is loaded
+    document.addEventListener('DOMContentLoaded', () => {
+        const user = getCurrentUser();
+        if (user) {
+            const userNameDisplay = document.getElementById('userNameDisplay');
+            if (userNameDisplay) {
+                userNameDisplay.textContent = user.login_id || user.email;
+            }
+        }
+        
+        // Load dashboard data after scripts are ready
+        loadDashboardData();
+    });
+    async function loadDashboardData() {
+        try {
+            const [receipts, deliveries] = await Promise.all([
+                api.getReceipts(),
+                api.getDeliveries()
+            ]);
+            
+            // Calculate receipt stats
+            const draftReceipts = receipts.filter(r => r.status === 'draft').length;
+            const doneReceipts = receipts.filter(r => r.status === 'done').length;
+            
+            // Update Receipts card
+            document.getElementById('receiptsToReceive').textContent = draftReceipts;
+            document.getElementById('receiptsCompleted').textContent = doneReceipts;
+            document.getElementById('receiptsTotal').textContent = `${receipts.length} total receipts`;
+            
+            // Calculate delivery stats
+            const draftDeliveries = deliveries.filter(d => d.status === 'draft').length;
+            const readyDeliveries = deliveries.filter(d => d.status === 'ready').length;
+            const doneDeliveries = deliveries.filter(d => d.status === 'done').length;
+            
+            // Update Deliveries card
+            document.getElementById('deliveriesToDeliver').textContent = draftDeliveries;
+            document.getElementById('deliveriesReady').textContent = readyDeliveries;
+            document.getElementById('deliveriesDone').textContent = doneDeliveries;
+            document.getElementById('deliveriesTotal').textContent = `${deliveries.length} total deliveries`;
+            
+            // Update Recent Moves
+            const recentMovesContainer = document.querySelector('.space-y-4');
+            if (recentMovesContainer && deliveries.length > 0) {
+                const recent = deliveries.slice(0, 4);
+                recentMovesContainer.innerHTML = recent.map(d => `
+                    <div class="flex items-center gap-3">
+                        <div class="size-2 rounded-full ${d.status === 'done' ? 'bg-status-green' : d.status === 'ready' ? 'bg-primary' : 'bg-slate-300'}"></div>
+                        <p class="text-xs font-bold text-slate-700">${d.reference || d.customer || 'Delivery'}</p>
+                        <p class="text-[10px] text-slate-400">${d.status}</p>
+                    </div>
+                `).join('');
+            }
+            
+            console.log('Dashboard data loaded');
+        } catch (err) {
+            console.error('Failed to load dashboard data:', err);
+        }
+    }
+</script>
+</body></html>

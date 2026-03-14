@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#008B8B",
+                        "background-main": "#FDFBF6",
+                        "background-card": "#FFFFF5",
+                        "slate-grey": "#4A5568",
+                        "late-red": "#C25252",
+                        "status-green": "#6A966A"
+                    },
+                    fontFamily: {
+                        "display": ["Space Grotesk"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style type="text/tailwindcss">
+        :root {
+            --primary: #008B8B;
+            --bg-main: #FDFBF6;
+            --bg-card: #FFFFF5;
+            --late-red: #C25252;
+            --status-green: #6A966A;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        body {
+            animation: fadeIn 0.2s ease-in-out;
+        }
+    </style>
+<title>Deliveries - LogisticsPro</title>
+</head>
+<body class="bg-background-main font-display text-slate-800 min-h-screen">
+<div class="flex h-screen flex-col">
+<header class="flex items-center justify-between border-b border-primary/10 px-3 sm:px-4 md:px-6 lg:px-8 py-3 sm:py-4 bg-background-main sticky top-0 z-40">
+<div class="flex items-center gap-2 sm:gap-3 text-primary">
+<span class="material-symbols-outlined text-2xl sm:text-3xl">local_shipping</span>
+<h2 class="text-lg sm:text-xl font-bold tracking-tight">LogisticsPro</h2>
+</div>
+<div class="flex items-center gap-2 sm:gap-3">
+<div class="text-right hidden sm:block">
+<p class="text-xs font-bold text-slate-700" id="userNameDisplay">Admin Terminal</p>
+<p class="text-[10px] text-slate-400 uppercase tracking-wider">Logistics HQ</p>
+</div>
+<div class="size-8 sm:size-10 rounded-full border-2 border-primary bg-cover bg-center" data-alt="User profile avatar icon" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAY04hioCw3DcSV_nhxUETggG94VAfJ1654paCWJtB4cFbLGVAa0BmmbUew_Uj-0A0TVm_uO5p7mFVYN34mtMfpKgr_RwR90IPSNU06qTOe3ItY9a1aFJ8czN0ITXa3ejOlVWX_yq0_hLjluSl77OUpiXooaSnUKLdUVbR1oDVmwEz9H8Td-Eq0WHDnxO9rtG1rHsTtWlsLnKGbTGPH5sG8D3TJh7bX-Lxxy-1pHt6JnemxpPCsCdgFKEUXUU0nxB5RHZN4ax0F9DOc')"></div>
+</div>
+</header>
+<main class="flex-1 flex overflow-hidden">
+<!-- Mobile menu button -->
+<button class="lg:hidden fixed top-20 left-4 z-50 p-3 bg-primary text-white rounded-lg shadow-lg" onclick="toggleMobileSidebar()">
+<span class="material-symbols-outlined">menu</span>
+</button>
+
+<!-- Mobile sidebar overlay -->
+<div id="mobileSidebarOverlay" class="lg:hidden fixed inset-0 bg-black bg-opacity-50 z-40 hidden" onclick="closeMobileSidebar()"></div>
+
+<aside id="sidebar" class="fixed lg:relative left-0 top-0 h-full w-64 sm:w-72 border-r border-primary/5 p-4 sm:p-6 hidden lg:flex flex-col gap-6 sm:gap-8 bg-background-main z-50 lg:z-auto transform -translate-x-full lg:translate-x-0 transition-transform duration-300">
+<section>
+<h3 class="text-xs font-bold text-primary/70 uppercase tracking-[0.2em] mb-6">Navigation</h3>
+<div class="flex flex-col gap-1">
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-primary/5 text-slate-600 transition-colors" href="saas-dashboard.html">
+<span class="material-symbols-outlined text-xl">grid_view</span>
+<span>Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl bg-primary text-white font-bold" href="delivery.html">
+<span class="material-symbols-outlined text-xl">local_shipping</span>
+<span>Operations</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-primary/5 text-slate-600 transition-colors" href="stock.html">
+<span class="material-symbols-outlined text-xl">warehouse</span>
+<span>Stock</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-primary/5 text-slate-600 transition-colors" href="move-history.html">
+<span class="material-symbols-outlined text-xl">history</span>
+<span>Move History</span>
+</a>
+<div class="border-t border-primary/10 my-2"></div>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-primary/5 text-slate-600 transition-colors" href="settings.html">
+<span class="material-symbols-outlined text-xl">settings</span>
+<span>Settings</span>
+<span class="material-symbols-outlined text-base text-slate-400">expand_more</span>
+</a>
+<div class="flex flex-col gap-1 pl-8">
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-primary/5 text-slate-600 transition-colors" href="warehouse.html">
+<span class="material-symbols-outlined text-xl">store</span>
+<span>Warehouse</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-primary/5 text-slate-600 transition-colors" href="location.html">
+<span class="material-symbols-outlined text-xl">place</span>
+<span>Locations</span>
+</a>
+</div>
+<div class="border-t border-primary/10 my-2"></div>
+<button onclick="logout()" class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-late-red/5 text-slate-600 hover:text-late-red transition-colors w-full text-left">
+<span class="material-symbols-outlined text-xl">logout</span>
+<span>Logout</span>
+</button>
+</div>
+</section>
+</aside>
+<section class="flex-1 overflow-y-auto p-4 sm:p-6 lg:p-8 xl:p-12 lg:ml-0">
+<!-- Page Header -->
+<div class="flex items-center justify-between gap-4 mb-6">
+<!-- Left Side: NEW button and Delivery title -->
+<div class="flex items-center gap-4">
+<button onclick="window.location.href='delivery-form.html'" class="bg-primary hover:bg-primary/90 text-white font-bold py-2.5 px-6 rounded-lg transition-all shadow-lg shadow-primary/20 flex items-center gap-2">
+<span class="material-symbols-outlined">add</span>
+NEW
+</button>
+<h1 class="text-xl sm:text-2xl lg:text-3xl font-black tracking-tighter text-slate-800">Deliveries</h1>
+</div>
+
+<!-- Right Side: Search and view toggles -->
+<div class="flex items-center gap-3">
+<!-- Search -->
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-lg">search</span>
+<input type="text" id="searchInput" placeholder="Search deliveries by reference or contact" class="bg-primary/5 border border-primary/10 rounded-lg pl-10 pr-4 py-2.5 text-sm focus:outline-0 focus:ring-2 focus:ring-primary/20 w-64 placeholder:text-slate-400">
+</div>
+<!-- View Toggle -->
+<div class="flex items-center bg-background-card border border-primary/10 rounded-lg p-1">
+<button id="listViewBtn" onclick="showListView()" class="px-3 py-2 bg-primary text-white rounded-md text-sm font-medium transition-colors flex items-center gap-2">
+<span class="material-symbols-outlined text-lg">view_list</span>
+<span class="hidden sm:inline">List View</span>
+</button>
+<button id="kanbanViewBtn" onclick="showKanbanView()" class="px-3 py-2 text-slate-600 rounded-md text-sm font-medium hover:bg-primary/5 transition-colors flex items-center gap-2">
+<span class="material-symbols-outlined text-lg">view_kanban</span>
+<span class="hidden sm:inline">Kanban View</span>
+</button>
+</div>
+</div>
+</div>
+
+<!-- Deliveries Table -->
+<div id="listView" class="bg-background-card border border-primary/10 rounded-xl overflow-hidden">
+<div class="overflow-x-auto">
+<table class="w-full">
+<thead class="bg-primary/5 border-b border-primary/10">
+<tr>
+<th class="text-left px-6 py-4 text-xs font-bold text-primary uppercase tracking-wider">Reference</th>
+<th class="text-left px-6 py-4 text-xs font-bold text-primary uppercase tracking-wider">From</th>
+<th class="text-left px-6 py-4 text-xs font-bold text-primary uppercase tracking-wider">To</th>
+<th class="text-left px-6 py-4 text-xs font-bold text-primary uppercase tracking-wider">Contact</th>
+<th class="text-left px-6 py-4 text-xs font-bold text-primary uppercase tracking-wider">Schedule Date</th>
+<th class="text-left px-6 py-4 text-xs font-bold text-primary uppercase tracking-wider">Status</th>
+</tr>
+</thead>
+<tbody id="deliveriesTableBody">
+<!-- Table rows will be populated by JavaScript -->
+</tbody>
+</table>
+</div>
+</div>
+
+<!-- Kanban View (Hidden by default) -->
+<div id="kanbanView" class="hidden">
+<div class="grid grid-cols-1 lg:grid-cols-4 gap-4 lg:gap-6">
+<div class="bg-background-card border border-primary/10 rounded-xl p-4 lg:p-6">
+<h3 class="font-bold text-slate-700 mb-4">Draft</h3>
+<div id="draftColumn" class="space-y-3">
+<!-- Kanban items will be populated by JavaScript -->
+</div>
+</div>
+<div class="bg-background-card border border-primary/10 rounded-xl p-4 lg:p-6">
+<h3 class="font-bold text-slate-700 mb-4">Waiting</h3>
+<div id="waitingColumn" class="space-y-3">
+<!-- Kanban items will be populated by JavaScript -->
+</div>
+</div>
+<div class="bg-background-card border border-primary/10 rounded-xl p-4 lg:p-6">
+<h3 class="font-bold text-slate-700 mb-4">Ready</h3>
+<div id="readyColumn" class="space-y-3">
+<!-- Kanban items will be populated by JavaScript -->
+</div>
+</div>
+<div class="bg-background-card border border-primary/10 rounded-xl p-4 lg:p-6">
+<h3 class="font-bold text-slate-700 mb-4">Done</h3>
+<div id="doneColumn" class="space-y-3">
+<!-- Kanban items will be populated by JavaScript -->
+</div>
+</div>
+</div>
+</div>
+</section>
+</main>
+</div>
+
+<script>
+// Mobile sidebar functions
+function toggleMobileSidebar() {
+    const sidebar = document.getElementById('sidebar');
+    const overlay = document.getElementById('mobileSidebarOverlay');
+    
+    if (sidebar && overlay) {
+        sidebar.classList.toggle('-translate-x-full');
+        sidebar.classList.toggle('translate-x-0');
+        overlay.classList.toggle('hidden');
+    }
+}
+
+function closeMobileSidebar() {
+    const sidebar = document.getElementById('sidebar');
+    const overlay = document.getElementById('mobileSidebarOverlay');
+    
+    if (sidebar && overlay) {
+        sidebar.classList.add('-translate-x-full');
+        sidebar.classList.remove('translate-x-0');
+        overlay.classList.add('hidden');
+    }
+}
+
+// Initialize page
+document.addEventListener('DOMContentLoaded', function() {
+    loadDeliveriesFromAPI();
+    
+    // Search functionality
+    document.getElementById('searchInput').addEventListener('input', function() {
+        searchDeliveries(this.value);
+    });
+});
+
+// Global deliveries data
+let deliveriesData = [];
+
+async function loadDeliveriesFromAPI() {
+    try {
+        deliveriesData = await api.getDeliveries();
+        console.log('Deliveries loaded from API:', deliveriesData);
+        renderDeliveryTable();
+        renderKanbanView();
+    } catch (err) {
+        console.error('Failed to load deliveries:', err);
+    }
+}
+
+function renderDeliveryTable() {
+    const tbody = document.getElementById('deliveriesTableBody');
+    if (!tbody) return;
+    
+    tbody.innerHTML = '';
+    
+    deliveriesData.forEach(delivery => {
+        const row = document.createElement('tr');
+        row.className = 'border-b border-primary/5 hover:bg-primary/5 transition-colors';
+        row.style.cursor = 'pointer';
+        row.onclick = () => {
+            if (delivery?.id) {
+                window.location.href = `delivery-form.html?id=${delivery.id}`;
+            }
+        };
+        row.innerHTML = `
+            <td class="px-6 py-4 text-sm font-medium text-slate-800">${delivery.reference || ''}</td>
+            <td class="px-6 py-4 text-sm text-slate-600">${delivery.from_location || '-'}</td>
+            <td class="px-6 py-4 text-sm text-slate-600">${delivery.to_location || '-'}</td>
+            <td class="px-6 py-4 text-sm text-slate-600">${delivery.contact || '-'}</td>
+            <td class="px-6 py-4 text-sm text-slate-600">${delivery.delivery_date || '-'}</td>
+            <td class="px-6 py-4">
+                <span class="px-3 py-1 rounded-full text-xs font-medium ${getDeliveryStatusClass(delivery.status)}">${delivery.status || 'draft'}</span>
+            </td>
+        `;
+        tbody.appendChild(row);
+    });
+}
+
+function getDeliveryStatusClass(status) {
+    const classes = {
+        'draft': 'bg-gray-100 text-gray-600',
+        'waiting': 'bg-yellow-100 text-yellow-700',
+        'ready': 'bg-primary/10 text-primary',
+        'done': 'bg-status-green/10 text-status-green',
+        'cancelled': 'bg-late-red/10 text-late-red'
+    };
+    return classes[status] || classes['draft'];
+}
+
+function renderKanbanView() {
+    const columns = {
+        'draft': document.getElementById('draftColumn'),
+        'waiting': document.getElementById('waitingColumn'),
+        'ready': document.getElementById('readyColumn'),
+        'done': document.getElementById('doneColumn')
+    };
+    
+    // Clear columns
+    Object.values(columns).forEach(col => {
+        if (col) col.innerHTML = '';
+    });
+    
+    deliveriesData.forEach(delivery => {
+        const column = columns[delivery.status] || columns['draft'];
+        if (column) {
+            const card = document.createElement('div');
+            card.className = 'bg-background-main border border-primary/10 rounded-lg p-3 mb-2';
+            card.innerHTML = `
+                <p class="font-medium text-sm text-slate-800">${delivery.reference}</p>
+                <p class="text-xs text-slate-500">${delivery.contact || delivery.customer || 'No contact'}</p>
+            `;
+            column.appendChild(card);
+        }
+    });
+}
+
+async function searchDeliveries(query) {
+    try {
+        deliveriesData = await api.getDeliveries({ search: query });
+        renderDeliveryTable();
+    } catch (err) {
+        console.error('Search failed:', err);
+    }
+}
+
+function showListView() {
+    document.getElementById('listView').classList.remove('hidden');
+    document.getElementById('kanbanView').classList.add('hidden');
+    document.getElementById('listViewBtn').classList.add('bg-primary', 'text-white');
+    document.getElementById('listViewBtn').classList.remove('bg-background-card', 'border', 'border-primary/10', 'text-slate-600');
+    document.getElementById('kanbanViewBtn').classList.remove('bg-primary', 'text-white');
+    document.getElementById('kanbanViewBtn').classList.add('bg-background-card', 'border', 'border-primary/10', 'text-slate-600');
+}
+
+function showKanbanView() {
+    document.getElementById('listView').classList.add('hidden');
+    document.getElementById('kanbanView').classList.remove('hidden');
+    document.getElementById('kanbanViewBtn').classList.add('bg-primary', 'text-white');
+    document.getElementById('kanbanViewBtn').classList.remove('bg-background-card', 'border', 'border-primary/10', 'text-slate-600');
+    document.getElementById('listViewBtn').classList.remove('bg-primary', 'text-white');
+    document.getElementById('listViewBtn').classList.add('bg-background-card', 'border', 'border-primary/10', 'text-slate-600');
+    renderKanbanView();
+}
+</script>
+<script src="api.js"></script>
+<script src="auth-check.js"></script>
+</body></html>

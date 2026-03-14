@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#008B8B",
+                        "background-main": "#FDFBF6",
+                        "background-card": "#FFFFF5",
+                        "slate-grey": "#4A5568",
+                        "late-red": "#C25252",
+                        "status-green": "#6A966A"
+                    },
+                    fontFamily: {
+                        "display": ["Space Grotesk"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style type="text/tailwindcss">
+        :root {
+            --primary: #008B8B;
+            --bg-main: #FDFBF6;
+            --bg-card: #FFFFF5;
+            --late-red: #C25252;
+            --status-green: #6A966A;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        body {
+            animation: fadeIn 0.2s ease-in-out;
+        }
+    </style>
+<title>New Receipt - LogisticsPro</title>
+</head>
+<body class="bg-background-main font-display text-slate-800 min-h-screen">
+<div class="flex h-screen flex-col">
+<header class="flex items-center justify-between border-b border-primary/10 px-3 sm:px-4 md:px-6 lg:px-8 py-3 sm:py-4 bg-background-main sticky top-0 z-40">
+<div class="flex items-center gap-2 sm:gap-3 text-primary">
+<span class="material-symbols-outlined text-2xl sm:text-3xl">package_2</span>
+<h2 class="text-lg sm:text-xl font-bold tracking-tight">LogisticsPro</h2>
+</div>
+<div class="flex items-center gap-2 sm:gap-3">
+<div class="text-right hidden sm:block">
+<p class="text-xs font-bold text-slate-700">Admin Terminal</p>
+<p class="text-[10px] text-slate-400 uppercase tracking-wider">Logistics HQ</p>
+</div>
+<div class="size-8 sm:size-10 rounded-full border-2 border-primary bg-cover bg-center" data-alt="User profile avatar icon" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAY04hioCw3DcSV_nhxUETggG94VAfJ1654paCWJtB4cFbLGVAa0BmmbUew_Uj-0A0TVm_uO5p7mFVYN34mtMfpKgr_RwR90IPSNU06qTOe3ItY9a1aFJ8czN0ITXa3ejOlVWX_yq0_hLjluSl77OUpiXooaSnUKLdUVbR1oDVmwEz9H8Td-Eq0WHDnxO9rtG1rHsTtWlsLnKGbTGPH5sG8D3TJh7bX-Lxxy-1pHt6JnemxpPCsCdgFKEUXUU0nxB5RHZN4ax0F9DOc')"></div>
+</div>
+</header>
+<main class="flex-1 flex overflow-hidden">
+<!-- Mobile menu button -->
+<button class="lg:hidden fixed top-20 left-4 z-50 p-3 bg-primary text-white rounded-lg shadow-lg" onclick="toggleMobileSidebar()">
+<span class="material-symbols-outlined">menu</span>
+</button>
+
+<!-- Mobile sidebar overlay -->
+<div id="mobileSidebarOverlay" class="lg:hidden fixed inset-0 bg-black bg-opacity-50 z-40 hidden" onclick="closeMobileSidebar()"></div>
+
+<aside id="sidebar" class="fixed lg:relative left-0 top-0 h-full w-64 sm:w-72 border-r border-primary/5 p-4 sm:p-6 hidden lg:flex flex-col gap-6 sm:gap-8 bg-background-main z-50 lg:z-auto transform -translate-x-full lg:translate-x-0 transition-transform duration-300">
+<section>
+<h3 class="text-xs font-bold text-primary/70 uppercase tracking-[0.2em] mb-6">Navigation</h3>
+<div class="flex flex-col gap-1">
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-primary/5 text-slate-600 transition-colors" href="saas-dashboard.html">
+<span class="material-symbols-outlined text-xl">grid_view</span>
+<span>Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl bg-primary text-white font-bold" href="delivery.html">
+<span class="material-symbols-outlined text-xl">local_shipping</span>
+<span>Operations</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-primary/5 text-slate-600 transition-colors" href="stock.html">
+<span class="material-symbols-outlined text-xl">warehouse</span>
+<span>Stock</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-primary/5 text-slate-600 transition-colors" href="move-history.html">
+<span class="material-symbols-outlined text-xl">history</span>
+<span>Move History</span>
+</a>
+<div class="border-t border-primary/10 my-2"></div>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-primary/5 text-slate-600 transition-colors" href="settings.html">
+<span class="material-symbols-outlined text-xl">settings</span>
+<span>Settings</span>
+<span class="material-symbols-outlined text-base text-slate-400">expand_more</span>
+</a>
+<div class="flex flex-col gap-1 pl-8">
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-primary/5 text-slate-600 transition-colors" href="warehouse.html">
+<span class="material-symbols-outlined text-xl">store</span>
+<span>Warehouse</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-primary/5 text-slate-600 transition-colors" href="location.html">
+<span class="material-symbols-outlined text-xl">place</span>
+<span>Locations</span>
+</a>
+</div>
+<div class="border-t border-primary/10 my-2"></div>
+<button onclick="logout()" class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-late-red/5 text-slate-600 hover:text-late-red transition-colors w-full text-left">
+<span class="material-symbols-outlined text-xl">logout</span>
+<span>Logout</span>
+</button>
+</div>
+</section>
+</aside>
+<section class="flex-1 overflow-y-auto p-4 sm:p-6 lg:p-8 xl:p-12 lg:ml-0">
+<!-- Page Header -->
+<div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-4">
+<div class="flex items-center gap-4">
+<h1 class="text-xl sm:text-2xl lg:text-3xl font-black tracking-tighter text-slate-800">Receipt</h1>
+<span class="px-3 py-1 rounded-full bg-primary/10 text-primary text-sm font-bold">NEW</span>
+</div>
+<div class="flex items-center gap-2">
+<button id="saveBtn" onclick="saveReceipt()" class="bg-primary hover:bg-primary/90 text-white font-bold py-2 px-4 rounded-lg transition-all shadow-lg shadow-primary/20 flex items-center gap-2">
+<span class="material-symbols-outlined text-lg">save</span>
+Save
+</button>
+<button id="mainActionBtn" onclick="performMainAction()" class="bg-background-card border border-primary/10 text-slate-700 font-medium py-2 px-4 rounded-lg hover:bg-primary/5 transition-colors">
+To Do
+</button>
+<button id="printBtn" onclick="printReceipt()" disabled class="bg-background-card border border-primary/10 text-slate-400 font-medium py-2 px-4 rounded-lg cursor-not-allowed">
+Print
+</button>
+<button onclick="cancelReceipt()" class="bg-background-card border border-primary/10 text-slate-700 font-medium py-2 px-4 rounded-lg hover:bg-primary/5 transition-colors">
+Cancel
+</button>
+</div>
+</div>
+
+<!-- Status Workflow Indicator - Responsive -->
+<div class="flex items-center justify-start sm:justify-end mb-6 overflow-x-auto">
+<div class="flex items-center gap-2 text-sm min-w-max">
+<span id="draftStatus" class="px-3 py-1 rounded-full bg-primary text-white font-medium whitespace-nowrap">Draft</span>
+<span class="material-symbols-outlined text-slate-400">arrow_forward</span>
+<span id="readyStatus" class="px-3 py-1 rounded-full bg-gray-100 text-gray-600 font-medium whitespace-nowrap">Ready</span>
+<span class="material-symbols-outlined text-slate-400">arrow_forward</span>
+<span id="doneStatus" class="px-3 py-1 rounded-full bg-gray-100 text-gray-600 font-medium whitespace-nowrap">Done</span>
+</div>
+</div>
+
+<!-- Receipt Details Section -->
+<div class="bg-background-card border border-primary/10 rounded-xl p-3 sm:p-4 mb-4 shadow-sm">
+<div class="mb-4">
+<div class="flex items-center gap-2 mb-2">
+<div class="w-6 h-6 bg-primary/10 rounded flex items-center justify-center">
+<span class="material-symbols-outlined text-primary text-xs">receipt_long</span>
+</div>
+<h3 class="text-sm font-bold text-slate-800">Reference ID</h3>
+</div>
+<input type="text" id="reference" readonly class="w-full bg-primary/5 border border-primary/10 rounded px-2 py-1.5 text-slate-600 font-medium text-sm shadow-sm">
+</div>
+
+<div class="grid grid-cols-1 md:grid-cols-2 gap-3 mb-3">
+<div>
+<div class="flex items-center gap-2 mb-2">
+<div class="w-6 h-6 bg-primary/10 rounded flex items-center justify-center">
+<span class="material-symbols-outlined text-primary text-xs">inventory</span>
+</div>
+<h3 class="text-sm font-bold text-slate-800">Receive From</h3>
+</div>
+<input type="text" id="receiveFrom" placeholder="Enter source" class="w-full bg-background-main border border-primary/10 rounded px-2 py-1.5 focus:outline-0 focus:ring-2 focus:ring-primary/20 shadow-sm">
+</div>
+<div>
+<div class="flex items-center gap-2 mb-2">
+<div class="w-6 h-6 bg-primary/10 rounded flex items-center justify-center">
+<span class="material-symbols-outlined text-primary text-xs">calendar_today</span>
+</div>
+<h3 class="text-sm font-bold text-slate-800">Schedule Date</h3>
+</div>
+<input type="date" id="scheduleDate" class="w-full bg-background-main border border-primary/10 rounded px-2 py-1.5 focus:outline-0 focus:ring-2 focus:ring-primary/20 shadow-sm">
+</div>
+</div>
+
+<div>
+<div class="flex items-center gap-2 mb-2">
+<div class="w-6 h-6 bg-primary/10 rounded flex items-center justify-center">
+<span class="material-symbols-outlined text-primary text-xs">person</span>
+</div>
+<h3 class="text-sm font-bold text-slate-800">Responsible</h3>
+</div>
+<input type="text" id="responsible" readonly value="" class="w-full bg-primary/5 border border-primary/10 rounded px-2 py-1.5 text-slate-600 font-medium shadow-sm">
+</div>
+</div>
+
+<!-- Products Section -->
+<div class="bg-background-card border border-primary/10 rounded-xl p-3 sm:p-4 shadow-sm">
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-3">
+<div class="flex items-center gap-2">
+<div class="w-6 h-6 bg-primary/10 rounded flex items-center justify-center">
+<span class="material-symbols-outlined text-primary text-xs">inventory_2</span>
+</div>
+<h3 class="text-sm font-bold text-slate-800">Products</h3>
+</div>
+<button type="button" onclick="addProductRow()" class="bg-primary hover:bg-primary/90 text-white font-medium py-1.5 px-3 rounded transition-colors flex items-center gap-2 w-full sm:w-auto justify-center shadow-sm">
+<span class="material-symbols-outlined text-sm">add</span>
+New Product
+</button>
+</div>
+
+<div class="bg-background-main border border-primary/10 rounded p-2 sm:p-3">
+<div class="overflow-x-auto">
+<table class="w-full min-w-[500px]">
+<thead class="bg-primary/5 border-b border-primary/10">
+<tr>
+<th class="text-left px-2 sm:px-3 py-2 text-xs font-bold text-primary uppercase tracking-wider">Product</th>
+<th class="text-left px-2 sm:px-3 py-2 text-xs font-bold text-primary uppercase tracking-wider">Quantity</th>
+<th class="text-left px-2 sm:px-3 py-2 text-xs font-bold text-primary uppercase tracking-wider">Action</th>
+</tr>
+</thead>
+<tbody id="productsTableBody">
+<tr>
+<td>
+<input type="text" placeholder="Enter product name" class="w-full bg-background-card border border-primary/10 rounded px-2 py-1.5 text-sm focus:outline-0 focus:ring-2 focus:ring-primary/20 shadow-sm">
+</td>
+<td>
+<input type="number" placeholder="0" min="1" class="w-full bg-background-card border border-primary/10 rounded px-2 py-1.5 text-sm focus:outline-0 focus:ring-2 focus:ring-primary/20 shadow-sm">
+</td>
+<td>
+<button type="button" onclick="removeProductRow(this)" class="text-red-500 hover:text-red-700 transition-colors p-1.5 hover:bg-red-50 rounded">
+<span class="material-symbols-outlined text-sm">delete</span>
+</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+
+</main>
+</div>
+
+<script src="api.js"></script>
+<script>
+let currentReceiptId = null;
+
+function toUiStatus(status) {
+    if (!status) return 'Draft';
+    const s = status.toString().toLowerCase();
+    if (s === 'draft') return 'Draft';
+    if (s === 'ready') return 'Ready';
+    if (s === 'done') return 'Done';
+    if (s === 'cancelled') return 'Cancelled';
+    return 'Draft';
+}
+
+function toApiStatus(status) {
+    if (!status) return 'draft';
+    const s = status.toString().toLowerCase();
+    if (s === 'draft') return 'draft';
+    if (s === 'ready') return 'ready';
+    if (s === 'done') return 'done';
+    if (s === 'cancelled') return 'cancelled';
+    return 'draft';
+}
+
+// Initialize page
+document.addEventListener('DOMContentLoaded', async function() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const receiptId = urlParams.get('id');
+
+    // Autofill responsible with current user
+    const user = getCurrentUser();
+    const responsibleEl = document.getElementById('responsible');
+    if (responsibleEl && user) {
+        responsibleEl.value = user.login_id || user.email;
+    }
+
+    // Set default schedule date to today
+    const today = new Date().toISOString().split('T')[0];
+    const scheduleDate = document.getElementById('scheduleDate');
+    if (scheduleDate && !scheduleDate.value) scheduleDate.value = today;
+
+    if (receiptId) {
+        await loadReceiptForEdit(receiptId);
+    } else {
+        try {
+            const result = await api.generateReference('receipt');
+            const refEl = document.getElementById('reference');
+            if (refEl) refEl.value = result.reference;
+        } catch (err) {
+            console.error('Failed to generate reference:', err);
+        }
+        updateStatusIndicator('Draft');
+        updateMainActionButton('Draft');
+        updatePrintButton('Draft');
+    }
+});
+
+function addProductRow() {
+    const tbody = document.getElementById('productsTableBody');
+    const newRow = document.createElement('tr');
+    newRow.innerHTML = `
+        <td>
+            <input type="text" placeholder="Enter product name" class="w-full bg-background-card border border-primary/10 rounded px-2 py-1.5 text-sm focus:outline-0 focus:ring-2 focus:ring-primary/20 shadow-sm">
+        </td>
+        <td>
+            <input type="number" placeholder="0" min="1" class="w-full bg-background-card border border-primary/10 rounded px-2 py-1.5 text-sm focus:outline-0 focus:ring-2 focus:ring-primary/20 shadow-sm">
+        </td>
+        <td>
+            <button type="button" onclick="removeProductRow(this)" class="text-red-500 hover:text-red-700 transition-colors p-1.5 hover:bg-red-50 rounded">
+                <span class="material-symbols-outlined text-sm">delete</span>
+            </button>
+        </td>
+    `;
+    tbody.appendChild(newRow);
+}
+
+function removeProductRow(button) {
+    const row = button.closest('tr');
+    const tbody = document.getElementById('productsTableBody');
+    if (!tbody) return;
+
+    if (tbody.children.length > 1) {
+        row.remove();
+    } else {
+        alert('At least one product row is required');
+    }
+}
+
+function cancelReceipt() {
+    if (confirm('Are you sure you want to cancel? Any unsaved changes will be lost.')) {
+        window.location.href = 'receipts.html';
+    }
+}
+
+function printReceipt() {
+    window.print();
+}
+
+function updateStatusIndicator(status) {
+    const draftStatus = document.getElementById('draftStatus');
+    const readyStatus = document.getElementById('readyStatus');
+    const doneStatus = document.getElementById('doneStatus');
+
+    if (!draftStatus || !readyStatus || !doneStatus) return;
+
+    draftStatus.className = 'px-3 py-1 rounded-full bg-gray-100 text-gray-600 font-medium whitespace-nowrap';
+    readyStatus.className = 'px-3 py-1 rounded-full bg-gray-100 text-gray-600 font-medium whitespace-nowrap';
+    doneStatus.className = 'px-3 py-1 rounded-full bg-gray-100 text-gray-600 font-medium whitespace-nowrap';
+
+    if (status === 'Draft') {
+        draftStatus.className = 'px-3 py-1 rounded-full bg-primary text-white font-medium whitespace-nowrap';
+    } else if (status === 'Ready') {
+        readyStatus.className = 'px-3 py-1 rounded-full bg-primary text-white font-medium whitespace-nowrap';
+    } else if (status === 'Done') {
+        doneStatus.className = 'px-3 py-1 rounded-full bg-primary text-white font-medium whitespace-nowrap';
+    }
+}
+
+function updateMainActionButton(status) {
+    const mainActionBtn = document.getElementById('mainActionBtn');
+    if (!mainActionBtn) return;
+
+    if (status === 'Draft') {
+        mainActionBtn.textContent = 'To Do';
+        mainActionBtn.disabled = false;
+        mainActionBtn.className = 'bg-background-card border border-primary/10 text-slate-700 font-medium py-2 px-4 rounded-lg hover:bg-primary/5 transition-colors';
+    } else if (status === 'Ready') {
+        mainActionBtn.textContent = 'Validate';
+        mainActionBtn.disabled = false;
+        mainActionBtn.className = 'bg-background-card border border-primary/10 text-slate-700 font-medium py-2 px-4 rounded-lg hover:bg-primary/5 transition-colors';
+    } else {
+        mainActionBtn.textContent = 'Done';
+        mainActionBtn.disabled = true;
+        mainActionBtn.className = 'bg-background-card border border-primary/10 text-slate-400 font-medium py-2 px-4 rounded-lg cursor-not-allowed';
+    }
+}
+
+function updatePrintButton(status) {
+    const printBtn = document.getElementById('printBtn');
+    if (!printBtn) return;
+
+    if (status === 'Done') {
+        printBtn.disabled = false;
+        printBtn.className = 'bg-primary hover:bg-primary/90 text-white font-medium py-2 px-4 rounded-lg transition-colors';
+    } else {
+        printBtn.disabled = true;
+        printBtn.className = 'bg-background-card border border-primary/10 text-slate-400 font-medium py-2 px-4 rounded-lg cursor-not-allowed';
+    }
+}
+
+async function loadReceiptForEdit(id) {
+    try {
+        const receipt = await api.getReceipt(id);
+        currentReceiptId = receipt.id;
+
+        document.getElementById('reference').value = receipt.reference || '';
+        document.getElementById('receiveFrom').value = receipt.supplier || '';
+        document.getElementById('scheduleDate').value = receipt.receipt_date || '';
+        // Autofill responsible with current user
+        const user = getCurrentUser();
+        document.getElementById('responsible').value = user?.login_id || user?.email || 'Admin User';
+
+        // Load items
+        const tbody = document.getElementById('productsTableBody');
+        tbody.innerHTML = '';
+
+        const items = Array.isArray(receipt.items) ? receipt.items : [];
+        if (items.length === 0) {
+            addProductRow();
+        } else {
+            items.forEach(item => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>
+                        <input type="text" value="${item.product_name || item.sku || ''}" class="w-full bg-background-card border border-primary/10 rounded px-2 py-1.5 text-sm focus:outline-0 focus:ring-2 focus:ring-primary/20 shadow-sm">
+                    </td>
+                    <td>
+                        <input type="number" value="${item.quantity || 0}" min="1" class="w-full bg-background-card border border-primary/10 rounded px-2 py-1.5 text-sm focus:outline-0 focus:ring-2 focus:ring-primary/20 shadow-sm">
+                    </td>
+                    <td>
+                        <button type="button" onclick="removeProductRow(this)" class="text-red-500 hover:text-red-700 transition-colors p-1.5 hover:bg-red-50 rounded">
+                            <span class="material-symbols-outlined text-sm">delete</span>
+                        </button>
+                    </td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
+
+        const uiStatus = toUiStatus(receipt.status);
+        updateStatusIndicator(uiStatus);
+        updateMainActionButton(uiStatus);
+        updatePrintButton(uiStatus);
+    } catch (err) {
+        console.error('Failed to load receipt:', err);
+    }
+}
+
+function validateForm() {
+    const receiveFrom = document.getElementById('receiveFrom')?.value?.trim();
+    const scheduleDate = document.getElementById('scheduleDate')?.value;
+    if (!receiveFrom || !scheduleDate) {
+        alert('Please fill in all required fields');
+        return false;
+    }
+
+    const rows = document.querySelectorAll('#productsTableBody tr');
+    const hasAny = Array.from(rows).some(r => {
+        const p = r.querySelector('input[type="text"]')?.value?.trim();
+        const q = parseInt(r.querySelector('input[type="number"]')?.value) || 0;
+        return p && q > 0;
+    });
+    if (!hasAny) {
+        alert('Please add at least one product');
+        return false;
+    }
+    return true;
+}
+
+function getCurrentStatus() {
+    const draftStatus = document.getElementById('draftStatus');
+    const readyStatus = document.getElementById('readyStatus');
+    const doneStatus = document.getElementById('doneStatus');
+
+    if (doneStatus?.classList.contains('bg-primary')) return 'Done';
+    if (readyStatus?.classList.contains('bg-primary')) return 'Ready';
+    if (draftStatus?.classList.contains('bg-primary')) return 'Draft';
+    return 'Draft';
+}
+
+async function performMainAction() {
+    const current = getCurrentStatus();
+    if (current === 'Done') return;
+
+    // Require a saved record before workflow transitions
+    if (!currentReceiptId) {
+        await saveReceipt();
+        if (!currentReceiptId) return;
+    }
+
+    if (!validateForm()) return;
+
+    const next = current === 'Draft' ? 'Ready' : current === 'Ready' ? 'Done' : 'Done';
+    await updateReceiptStatus(next);
+}
+
+async function updateReceiptStatus(nextUiStatus) {
+    if (!currentReceiptId) return;
+    try {
+        await api.updateReceipt(currentReceiptId, { status: toApiStatus(nextUiStatus) });
+        updateStatusIndicator(nextUiStatus);
+        updateMainActionButton(nextUiStatus);
+        updatePrintButton(nextUiStatus);
+
+        if (nextUiStatus === 'Done') {
+            setTimeout(() => {
+                window.location.href = 'receipts.html';
+            }, 800);
+        }
+    } catch (err) {
+        alert('Failed to update status: ' + err.message);
+    }
+}
+
+// Save receipt function
+async function saveReceipt() {
+    const receipt = collectFormData();
+
+    if (!receipt.reference) {
+        alert('Please enter a reference ID');
+        return;
+    }
+    
+    try {
+        let result;
+        if (currentReceiptId) {
+            result = await api.updateReceipt(currentReceiptId, receipt);
+        } else {
+            result = await api.createReceipt(receipt);
+            if (result?.id) {
+                currentReceiptId = result.id;
+            }
+        }
+        
+        // Show success feedback
+        const saveBtn = document.getElementById('saveBtn');
+        const originalText = saveBtn.innerHTML;
+        saveBtn.innerHTML = '<span class="material-symbols-outlined text-lg">check</span> Saved!';
+        saveBtn.classList.add('bg-status-green');
+        saveBtn.classList.remove('bg-primary');
+        
+        setTimeout(() => {
+            saveBtn.innerHTML = originalText;
+            saveBtn.classList.remove('bg-status-green');
+            saveBtn.classList.add('bg-primary');
+        }, 2000);
+        
+        console.log('Receipt saved:', result);
+    } catch (err) {
+        alert('Failed to save receipt: ' + err.message);
+    }
+}
+
+function collectFormData() {
+    // Collect products from table
+    const products = [];
+    const rows = document.querySelectorAll('#productsTableBody tr');
+    rows.forEach(row => {
+        const productInput = row.querySelector('input[type="text"]');
+        const quantityInput = row.querySelector('input[type="number"]');
+        if (productInput && quantityInput) {
+            const product = productInput.value.trim();
+            const quantity = parseInt(quantityInput.value) || 0;
+            if (product && quantity > 0) {
+                products.push({ product, quantity });
+            }
+        }
+    });
+    
+    return {
+        reference: document.getElementById('reference')?.value || '',
+        receipt_date: document.getElementById('scheduleDate')?.value || '',
+        supplier: document.getElementById('receiveFrom')?.value || '',
+        from_location: document.getElementById('receiveFrom')?.value || '',
+        to_location: 'Warehouse',
+        contact: document.getElementById('responsible')?.value || 'Admin User',
+        status: 'draft',
+        items: products
+    };
+}
+
+// Mobile sidebar functions
+function toggleMobileSidebar() {
+    const sidebar = document.getElementById('sidebar');
+    const overlay = document.getElementById('mobileSidebarOverlay');
+    
+    if (sidebar && overlay) {
+        sidebar.classList.toggle('-translate-x-full');
+        sidebar.classList.toggle('translate-x-0');
+        overlay.classList.toggle('hidden');
+    }
+}
+
+function closeMobileSidebar() {
+    const sidebar = document.getElementById('sidebar');
+    const overlay = document.getElementById('mobileSidebarOverlay');
+    
+    if (sidebar && overlay) {
+        sidebar.classList.add('-translate-x-full');
+        sidebar.classList.remove('translate-x-0');
+        overlay.classList.add('hidden');
+    }
+}
+</script>
+<script src="auth-check.js"></script>
+</body></html>

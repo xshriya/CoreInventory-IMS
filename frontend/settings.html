@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport"/>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#008B8B",
+                        "background-main": "#FDFBF6",
+                        "background-card": "#FFFFF5",
+                        "slate-grey": "#4A5568",
+                        "late-red": "#C25252",
+                        "status-green": "#6A966A"
+                    },
+                    fontFamily: {
+                        "display": ["Space Grotesk"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+    <style type="text/tailwindcss">
+        :root {
+            --primary: #008B8B;
+            --bg-main: #FDFBF6;
+            --bg-card: #FFFFF5;
+            --late-red: #C25252;
+            --status-green: #6A966A;
+        }
+    </style>
+    <title>Settings - LogisticsPro</title>
+</head>
+<body class="bg-background-main font-display text-slate-800 min-h-screen">
+    <div class="flex h-screen flex-col">
+        <header class="flex items-center justify-between border-b border-primary/10 px-3 sm:px-4 md:px-6 lg:px-8 py-3 sm:py-4 bg-background-main sticky top-0 z-40">
+            <div class="flex items-center gap-2 sm:gap-3 text-primary">
+                <span class="material-symbols-outlined text-2xl sm:text-3xl">package_2</span>
+                <h2 class="text-lg sm:text-xl font-bold tracking-tight">LogisticsPro</h2>
+            </div>
+            <div class="flex items-center gap-2 sm:gap-3">
+                <div class="text-right hidden sm:block">
+                    <p class="text-xs font-bold text-slate-700" id="userNameDisplay">Admin Terminal</p>
+                    <p class="text-[10px] text-slate-400 uppercase tracking-wider">Logistics HQ</p>
+                </div>
+                <div class="size-8 sm:size-10 rounded-full border-2 border-primary bg-cover bg-center" data-alt="User profile avatar icon" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAY04hioCw3DcSV_nhxUETggG94VAfJ1654paCWJtB4cFbLGVAa0BmmbUew_Uj-0A0TVm_uO5p7mFVYN34mtMfpKgr_RwR90IPSNU06qTOe3ItY9a1aFJ8czN0ITXa3ejOlVWX_yq0_hLjluSl77OUpiXooaSnUKLdUVbR1oDVmwEz9H8Td-Eq0WHDnxO9rtG1rHsTtWlsLnKGbTGPH5sG8D3TJh7bX-Lxxy-1pHt6JnemxpPCsCdgFKEUXUU0nxB5RHZN4ax0F9DOc')"></div>
+            </div>
+        </header>
+
+        <main class="flex-1 flex overflow-hidden">
+            <!-- Mobile menu button -->
+            <button class="lg:hidden fixed top-20 left-4 z-50 p-3 bg-primary text-white rounded-lg shadow-lg" onclick="toggleMobileSidebar()">
+                <span class="material-symbols-outlined">menu</span>
+            </button>
+
+            <!-- Mobile sidebar overlay -->
+            <div id="mobileSidebarOverlay" class="lg:hidden fixed inset-0 bg-black bg-opacity-50 z-40 hidden" onclick="closeMobileSidebar()"></div>
+
+            <aside id="sidebar" class="fixed lg:relative left-0 top-0 h-full w-64 sm:w-72 border-r border-primary/5 p-4 sm:p-6 hidden lg:flex flex-col gap-6 sm:gap-8 bg-background-main z-50 lg:z-auto transform -translate-x-full lg:translate-x-0 transition-transform duration-300">
+                <section>
+                    <h3 class="text-xs font-bold text-primary/70 uppercase tracking-[0.2em] mb-6">Navigation</h3>
+                    <div class="flex flex-col gap-1">
+                        <a class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-primary/5 text-slate-600 transition-colors" href="saas-dashboard.html">
+                            <span class="material-symbols-outlined text-xl">grid_view</span>
+                            <span>Dashboard</span>
+                        </a>
+                        <a class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-primary/5 text-slate-600 transition-colors" href="delivery.html">
+                            <span class="material-symbols-outlined text-xl">local_shipping</span>
+                            <span>Operations</span>
+                        </a>
+                        <a class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-primary/5 text-slate-600 transition-colors" href="stock.html">
+                            <span class="material-symbols-outlined text-xl">warehouse</span>
+                            <span>Stock</span>
+                        </a>
+                        <a class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-primary/5 text-slate-600 transition-colors" href="move-history.html">
+                            <span class="material-symbols-outlined text-xl">history</span>
+                            <span>Move History</span>
+                        </a>
+                        <div class="border-t border-primary/10 my-2"></div>
+                        <a class="flex items-center gap-3 px-4 py-3 rounded-xl bg-primary text-white font-bold" href="settings.html">
+                            <span class="material-symbols-outlined text-xl">settings</span>
+                            <span>Settings</span>
+                            <span class="material-symbols-outlined text-base text-white">expand_more</span>
+                        </a>
+                        <div class="flex flex-col gap-1 pl-8">
+                            <a class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-primary/5 text-slate-600 transition-colors" href="warehouse.html">
+                                <span class="material-symbols-outlined text-xl">store</span>
+                                <span>Warehouse</span>
+                            </a>
+                            <a class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-primary/5 text-slate-600 transition-colors" href="location.html">
+                                <span class="material-symbols-outlined text-xl">place</span>
+                                <span>Locations</span>
+                            </a>
+                        </div>
+                        <div class="border-t border-primary/10 my-2"></div>
+                        <button onclick="logout()" class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-late-red/5 text-slate-600 hover:text-late-red transition-colors w-full text-left">
+                            <span class="material-symbols-outlined text-xl">logout</span>
+                            <span>Logout</span>
+                        </button>
+                    </div>
+                </section>
+            </aside>
+
+            <section class="flex-1 overflow-y-auto p-4 sm:p-6 lg:p-8 xl:p-12 lg:ml-0">
+                <header class="mb-6 sm:mb-8 lg:mb-12">
+                    <h1 class="text-2xl sm:text-3xl lg:text-4xl xl:text-5xl font-black tracking-tighter mb-2 text-slate-800">Settings</h1>
+                    <p class="text-slate-500 text-sm sm:text-base lg:text-lg">Configure your inventory management system and access administrative tools.</p>
+                </header>
+
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8">
+                    <!-- Warehouse Configuration -->
+                    <div class="bg-background-card border border-primary/10 rounded-xl p-6 sm:p-8 shadow-sm hover:border-primary/30 transition-colors group">
+                        <div class="flex items-start justify-between mb-6">
+                            <div class="flex items-center gap-3">
+                                <div class="size-12 bg-primary/10 rounded-lg flex items-center justify-center group-hover:bg-primary/20 transition-colors">
+                                    <span class="material-symbols-outlined text-primary text-2xl">store</span>
+                                </div>
+                                <div>
+                                    <h3 class="text-lg font-bold text-slate-800">Warehouse</h3>
+                                    <p class="text-sm text-slate-500">Manage warehouse locations</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="space-y-4">
+                            <div class="flex items-center justify-between text-sm">
+                                <span class="text-slate-600">Total Warehouses</span>
+                                <span id="warehouseCount" class="font-semibold text-primary">0</span>
+                            </div>
+                            <div class="flex items-center justify-between text-sm">
+                                <span class="text-slate-600">Active Locations</span>
+                                <span id="locationCount" class="font-semibold text-primary">0</span>
+                            </div>
+                        </div>
+                        
+                        <div class="mt-6 pt-6 border-t border-primary/5">
+                            <a href="warehouse.html" class="w-full bg-primary hover:bg-primary/90 text-white font-bold py-3 rounded-lg transition-all shadow-lg shadow-primary/20 text-sm flex items-center justify-center gap-2">
+                                <span class="material-symbols-outlined">edit</span>
+                                Manage Warehouses
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Location Configuration -->
+                    <div class="bg-background-card border border-primary/10 rounded-xl p-6 sm:p-8 shadow-sm hover:border-primary/30 transition-colors group">
+                        <div class="flex items-start justify-between mb-6">
+                            <div class="flex items-center gap-3">
+                                <div class="size-12 bg-primary/10 rounded-lg flex items-center justify-center group-hover:bg-primary/20 transition-colors">
+                                    <span class="material-symbols-outlined text-primary text-2xl">place</span>
+                                </div>
+                                <div>
+                                    <h3 class="text-lg font-bold text-slate-800">Locations</h3>
+                                    <p class="text-sm text-slate-500">Configure storage locations</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="space-y-4">
+                            <div class="flex items-center justify-between text-sm">
+                                <span class="text-slate-600">Total Locations</span>
+                                <span id="totalLocationCount" class="font-semibold text-primary">0</span>
+                            </div>
+                            <div class="flex items-center justify-between text-sm">
+                                <span class="text-slate-600">Warehouses Used</span>
+                                <span id="warehouseUsedCount" class="font-semibold text-primary">0</span>
+                            </div>
+                        </div>
+                        
+                        <div class="mt-6 pt-6 border-t border-primary/5">
+                            <a href="location.html" class="w-full bg-primary hover:bg-primary/90 text-white font-bold py-3 rounded-lg transition-all shadow-lg shadow-primary/20 text-sm flex items-center justify-center gap-2">
+                                <span class="material-symbols-outlined">edit</span>
+                                Manage Locations
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- System Settings -->
+                    <div class="bg-background-card border border-primary/10 rounded-xl p-6 sm:p-8 shadow-sm hover:border-primary/30 transition-colors group lg:col-span-2">
+                        <div class="flex items-start justify-between mb-6">
+                            <div class="flex items-center gap-3">
+                                <div class="size-12 bg-primary/10 rounded-lg flex items-center justify-center group-hover:bg-primary/20 transition-colors">
+                                    <span class="material-symbols-outlined text-primary text-2xl">settings_applications</span>
+                                </div>
+                                <div>
+                                    <h3 class="text-lg font-bold text-slate-800">System Configuration</h3>
+                                    <p class="text-sm text-slate-500">System-wide settings and preferences</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                            <div class="space-y-4">
+                                <h4 class="font-semibold text-slate-700 text-sm">Data Management</h4>
+                                <div class="space-y-2">
+                                    <button onclick="initializeSampleData()" class="w-full text-left px-4 py-3 bg-background-main rounded-lg border border-primary/5 hover:border-primary/20 transition-colors text-sm">
+                                        <div class="flex items-center gap-2">
+                                            <span class="material-symbols-outlined text-primary">dataset</span>
+                                            <span>Initialize Sample Data</span>
+                                        </div>
+                                    </button>
+                                    <button onclick="clearAllData()" class="w-full text-left px-4 py-3 bg-late-red/5 rounded-lg border border-late-red/10 hover:border-late-red/20 transition-colors text-sm">
+                                        <div class="flex items-center gap-2">
+                                            <span class="material-symbols-outlined text-late-red">clear_all</span>
+                                            <span class="text-late-red">Clear All Data</span>
+                                        </div>
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <div class="space-y-4">
+                                <h4 class="font-semibold text-slate-700 text-sm">System Information</h4>
+                                <div class="space-y-2 text-sm">
+                                    <div class="flex justify-between">
+                                        <span class="text-slate-600">Version</span>
+                                        <span class="font-medium">1.0.0</span>
+                                    </div>
+                                    <div class="flex justify-between">
+                                        <span class="text-slate-600">Last Updated</span>
+                                        <span class="font-medium" id="lastUpdated">Today</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="space-y-4">
+                                <h4 class="font-semibold text-slate-700 text-sm">Storage</h4>
+                                <div class="space-y-2 text-sm">
+                                    <div class="flex justify-between">
+                                        <span class="text-slate-600">Data Location</span>
+                                        <span class="font-medium">Local Storage</span>
+                                    </div>
+                                    <div class="flex justify-between">
+                                        <span class="text-slate-600">Status</span>
+                                        <span class="font-medium text-status-green">Active</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="api.js"></script>
+    <script src="auth-check.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            updateStatistics();
+            
+            // Mobile sidebar functions
+            window.toggleMobileSidebar = function() {
+                const sidebar = document.getElementById('sidebar');
+                const overlay = document.getElementById('mobileSidebarOverlay');
+                
+                if (sidebar && overlay) {
+                    sidebar.classList.toggle('-translate-x-full');
+                    sidebar.classList.toggle('translate-x-0');
+                    overlay.classList.toggle('hidden');
+                }
+            };
+
+            window.closeMobileSidebar = function() {
+                const sidebar = document.getElementById('sidebar');
+                const overlay = document.getElementById('mobileSidebarOverlay');
+                
+                if (sidebar && overlay) {
+                    sidebar.classList.add('-translate-x-full');
+                    sidebar.classList.remove('translate-x-0');
+                    overlay.classList.add('hidden');
+                }
+            };
+        });
+
+        async function updateStatistics() {
+            try {
+                const [warehouses, locations, stock] = await Promise.all([
+                    api.getWarehouses(),
+                    api.getLocations(),
+                    api.getStock()
+                ]);
+
+                // Update counts
+                document.getElementById('warehouseCount').textContent = warehouses.length;
+                document.getElementById('locationCount').textContent = locations.length;
+                document.getElementById('totalLocationCount').textContent = locations.length;
+                document.getElementById('warehouseUsedCount').textContent = new Set(locations.map(l => l.warehouse_id)).size;
+                document.getElementById('productCount').textContent = stock.length;
+
+                // Calculate total value (if unit_cost available)
+                const totalValue = stock.reduce((sum, s) => sum + ((s.unit_cost || 0) * (s.on_hand || 0)), 0);
+                document.getElementById('totalValue').textContent = `₹${totalValue.toLocaleString()}`;
+
+                // Update last updated time
+                document.getElementById('lastUpdated').textContent = new Date().toLocaleDateString();
+            } catch (error) {
+                console.error('Error loading statistics:', error);
+            }
+        }
+
+        function initializeSampleData() {
+            showNotification('Sample data initialization requires backend setup. Please add data through the respective forms.', 'info');
+        }
+
+        function clearAllData() {
+            if (confirm('This action cannot be undone. Are you sure you want to clear all data? This must be done through the database.')) {
+                showNotification('Data clearing requires database access. Contact your administrator.', 'info');
+            }
+        }
+
+        function showNotification(message, type) {
+            const notification = document.createElement('div');
+            notification.className = `fixed top-4 right-4 px-4 py-3 rounded-lg shadow-lg z-50 ${
+                type === 'success' ? 'bg-status-green text-white' : 
+                type === 'error' ? 'bg-late-red text-white' : 'bg-primary text-white'
+            }`;
+            notification.textContent = message;
+            document.body.appendChild(notification);
+            setTimeout(() => notification.remove(), 3000);
+        }
+    </script>
+</body>
+</html>

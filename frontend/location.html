@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport"/>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#008B8B",
+                        "background-main": "#FDFBF6",
+                        "background-card": "#FFFFF5",
+                        "slate-grey": "#4A5568",
+                        "late-red": "#C25252",
+                        "status-green": "#6A966A"
+                    },
+                    fontFamily: {
+                        "display": ["Space Grotesk"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+    <style type="text/tailwindcss">
+        :root {
+            --primary: #008B8B;
+            --bg-main: #FDFBF6;
+            --bg-card: #FFFFF5;
+            --late-red: #C25252;
+            --status-green: #6A966A;
+        }
+    </style>
+    <title>Location Management - LogisticsPro</title>
+</head>
+<body class="bg-background-main font-display text-slate-800 min-h-screen">
+    <div class="flex h-screen flex-col">
+        <header class="flex items-center justify-between border-b border-primary/10 px-3 sm:px-4 md:px-6 lg:px-8 py-3 sm:py-4 bg-background-main sticky top-0 z-40">
+            <div class="flex items-center gap-2 sm:gap-3 text-primary">
+                <span class="material-symbols-outlined text-2xl sm:text-3xl">package_2</span>
+                <h2 class="text-lg sm:text-xl font-bold tracking-tight">LogisticsPro</h2>
+            </div>
+            <div class="flex items-center gap-2 sm:gap-3">
+                <div class="text-right hidden sm:block">
+                    <p class="text-xs font-bold text-slate-700" id="userNameDisplay">Admin Terminal</p>
+                    <p class="text-[10px] text-slate-400 uppercase tracking-wider">Logistics HQ</p>
+                </div>
+                <div class="size-8 sm:size-10 rounded-full border-2 border-primary bg-cover bg-center" data-alt="User profile avatar icon" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAY04hioCw3DcSV_nhxUETggG94VAfJ1654paCWJtB4cFbLGVAa0BmmbUew_Uj-0A0TVm_uO5p7mFVYN34mtMfpKgr_RwR90IPSNU06qTOe3ItY9a1aFJ8czN0ITXa3ejOlVWX_yq0_hLjluSl77OUpiXooaSnUKLdUVbR1oDVmwEz9H8Td-Eq0WHDnxO9rtG1rHsTtWlsLnKGbTGPH5sG8D3TJh7bX-Lxxy-1pHt6JnemxpPCsCdgFKEUXUU0nxB5RHZN4ax0F9DOc')"></div>
+            </div>
+        </header>
+
+        <main class="flex-1 flex overflow-hidden">
+            <!-- Mobile menu button -->
+            <button class="lg:hidden fixed top-20 left-4 z-50 p-3 bg-primary text-white rounded-lg shadow-lg" onclick="toggleMobileSidebar()">
+                <span class="material-symbols-outlined">menu</span>
+            </button>
+
+            <!-- Mobile sidebar overlay -->
+            <div id="mobileSidebarOverlay" class="lg:hidden fixed inset-0 bg-black bg-opacity-50 z-40 hidden" onclick="closeMobileSidebar()"></div>
+
+            <aside id="sidebar" class="fixed lg:relative left-0 top-0 h-full w-64 sm:w-72 border-r border-primary/5 p-4 sm:p-6 hidden lg:flex flex-col gap-6 sm:gap-8 bg-background-main z-50 lg:z-auto transform -translate-x-full lg:translate-x-0 transition-transform duration-300">
+                <section>
+                    <h3 class="text-xs font-bold text-primary/70 uppercase tracking-[0.2em] mb-6">Navigation</h3>
+                    <div class="flex flex-col gap-1">
+                        <a class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-primary/5 text-slate-600 transition-colors" href="saas-dashboard.html">
+                            <span class="material-symbols-outlined text-xl">grid_view</span>
+                            <span>Dashboard</span>
+                        </a>
+                        <a class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-primary/5 text-slate-600 transition-colors" href="delivery.html">
+                            <span class="material-symbols-outlined text-xl">local_shipping</span>
+                            <span>Operations</span>
+                        </a>
+                        <a class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-primary/5 text-slate-600 transition-colors" href="stock.html">
+                            <span class="material-symbols-outlined text-xl">warehouse</span>
+                            <span>Stock</span>
+                        </a>
+                        <a class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-primary/5 text-slate-600 transition-colors" href="move-history.html">
+                            <span class="material-symbols-outlined text-xl">history</span>
+                            <span>Move History</span>
+                        </a>
+                        <div class="border-t border-primary/10 my-2"></div>
+                        <a class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-primary/5 text-slate-600 transition-colors" href="settings.html">
+                            <span class="material-symbols-outlined text-xl">settings</span>
+                            <span>Settings</span>
+                            <span class="material-symbols-outlined text-base text-slate-400">expand_more</span>
+                        </a>
+                        <div class="flex flex-col gap-1 pl-8">
+                            <a class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-primary/5 text-slate-600 transition-colors" href="warehouse.html">
+                                <span class="material-symbols-outlined text-xl">store</span>
+                                <span>Warehouse</span>
+                            </a>
+                            <a class="flex items-center gap-3 px-4 py-3 rounded-xl bg-primary text-white font-bold" href="location.html">
+                                <span class="material-symbols-outlined text-xl">place</span>
+                                <span>Locations</span>
+                            </a>
+                        </div>
+                        <div class="border-t border-primary/10 my-2"></div>
+                        <button onclick="logout()" class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-late-red/5 text-slate-600 hover:text-late-red transition-colors w-full text-left">
+                            <span class="material-symbols-outlined text-xl">logout</span>
+                            <span>Logout</span>
+                        </button>
+                    </div>
+                </section>
+            </aside>
+
+            <section class="flex-1 overflow-y-auto p-4 sm:p-6 lg:p-8 xl:p-12 lg:ml-0">
+                <header class="mb-4 sm:mb-6 lg:mb-8">
+                    <h1 class="text-xl sm:text-2xl lg:text-3xl xl:text-4xl font-black tracking-tighter mb-2 text-slate-800">Location Management</h1>
+                    <p class="text-slate-500 text-sm sm:text-base lg:text-lg">Create and manage storage locations within your warehouses.</p>
+                </header>
+
+                <div class="max-w-2xl mx-auto">
+                    <div class="bg-background-card border border-primary/10 rounded-xl p-6 sm:p-8 shadow-sm">
+                        <div class="flex items-center gap-3 mb-6">
+                            <span class="material-symbols-outlined text-primary text-3xl">place</span>
+                            <h2 class="text-xl font-bold text-slate-800">Add New Location</h2>
+                        </div>
+
+                        <form id="locationForm" class="space-y-6">
+                            <div>
+                                <label class="block text-sm font-semibold text-slate-700 mb-2">Location Name</label>
+                                <input type="text" id="locationName" required
+                                    class="w-full rounded-lg text-slate-800 focus:outline-0 focus:ring-2 focus:ring-primary/20 border border-primary/10 bg-background-main h-12 placeholder:text-slate-400 px-4 text-sm font-normal leading-normal"
+                                    placeholder="e.g., Shelf A">
+                            </div>
+
+                            <div>
+                                <label class="block text-sm font-semibold text-slate-700 mb-2">Short Code</label>
+                                <input type="text" id="locationShortCode" required maxlength="8"
+                                    class="w-full rounded-lg text-slate-800 focus:outline-0 focus:ring-2 focus:ring-primary/20 border border-primary/10 bg-background-main h-12 placeholder:text-slate-400 px-4 text-sm font-normal leading-normal uppercase"
+                                    placeholder="e.g., SH-A">
+                            </div>
+
+                            <div>
+                                <label class="block text-sm font-semibold text-slate-700 mb-2">Warehouse</label>
+                                <select id="warehouseSelect" required
+                                    class="w-full rounded-lg text-slate-800 focus:outline-0 focus:ring-2 focus:ring-primary/20 border border-primary/10 bg-background-main h-12 px-4 text-sm font-normal leading-normal">
+                                    <option value="">Select Warehouse</option>
+                                </select>
+                            </div>
+
+                            <div class="flex flex-col sm:flex-row gap-3 pt-4">
+                                <button type="submit" 
+                                    class="flex-1 bg-primary hover:bg-primary/90 text-white font-bold py-3 rounded-lg transition-all shadow-lg shadow-primary/20 text-sm">
+                                    Save Location
+                                </button>
+                                <button type="button" onclick="resetForm()"
+                                    class="flex-1 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold py-3 rounded-lg transition-all text-sm">
+                                    Clear
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <!-- Existing Locations -->
+                    <div class="mt-8 bg-background-card border border-primary/10 rounded-xl p-6 sm:p-8 shadow-sm">
+                        <div class="flex items-center justify-between mb-6">
+                            <div class="flex items-center gap-3">
+                                <span class="material-symbols-outlined text-primary text-3xl">list</span>
+                                <h2 class="text-xl font-bold text-slate-800">Existing Locations</h2>
+                            </div>
+                            <span id="locationCount" class="text-sm font-medium text-slate-500">0 locations</span>
+                        </div>
+
+                        <div id="locationsList" class="space-y-3">
+                            <div class="text-center py-8 text-slate-400">
+                                <span class="material-symbols-outlined text-4xl mb-2">place</span>
+                                <p class="text-sm">No locations created yet</p>
+                                <p class="text-xs mt-1">Create a warehouse first to add locations</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="api.js"></script>
+    <script src="auth-check.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            populateWarehouseDropdown();
+            loadLocationsList();
+            
+            // Form submission
+            document.getElementById('locationForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                saveLocationData();
+            });
+
+            // Mobile sidebar functions
+            window.toggleMobileSidebar = function() {
+                const sidebar = document.getElementById('sidebar');
+                const overlay = document.getElementById('mobileSidebarOverlay');
+                
+                if (sidebar && overlay) {
+                    sidebar.classList.toggle('-translate-x-full');
+                    sidebar.classList.toggle('translate-x-0');
+                    overlay.classList.toggle('hidden');
+                }
+            };
+
+            window.closeMobileSidebar = function() {
+                const sidebar = document.getElementById('sidebar');
+                const overlay = document.getElementById('mobileSidebarOverlay');
+                
+                if (sidebar && overlay) {
+                    sidebar.classList.add('-translate-x-full');
+                    sidebar.classList.remove('translate-x-0');
+                    overlay.classList.add('hidden');
+                }
+            };
+        });
+
+        async function populateWarehouseDropdown() {
+            try {
+                const warehouses = await api.getWarehouses();
+                const select = document.getElementById('warehouseSelect');
+                
+                select.innerHTML = '<option value="">Select Warehouse</option>' + 
+                    warehouses.map(w => `<option value="${w.id}">${w.name} (${w.code})</option>`).join('');
+            } catch (error) {
+                console.error('Error loading warehouses:', error);
+            }
+        }
+
+        async function saveLocationData() {
+            const name = document.getElementById('locationName').value.trim();
+            const code = document.getElementById('locationShortCode').value.trim().toUpperCase();
+            const warehouse_id = document.getElementById('warehouseSelect').value;
+
+            if (!name) {
+                showNotification('Location name is required', 'error');
+                return;
+            }
+            if (!code) {
+                showNotification('Location code is required', 'error');
+                return;
+            }
+            if (!warehouse_id) {
+                showNotification('Please select a warehouse', 'error');
+                return;
+            }
+
+            try {
+                await api.createLocation({ name, code, warehouse_id: parseInt(warehouse_id) });
+                showNotification('Location saved successfully!', 'success');
+                document.getElementById('locationForm').reset();
+                loadLocationsList();
+            } catch (error) {
+                showNotification(error.message || 'Error saving location', 'error');
+            }
+        }
+
+        async function loadLocationsList() {
+            try {
+                const locations = await api.getLocations();
+                const locationsList = document.getElementById('locationsList');
+                const locationCount = document.getElementById('locationCount');
+
+                locationCount.textContent = `${locations.length} location${locations.length !== 1 ? 's' : ''}`;
+
+                if (locations.length === 0) {
+                    locationsList.innerHTML = `
+                        <div class="text-center py-8 text-slate-400">
+                            <span class="material-symbols-outlined text-4xl mb-2">place</span>
+                            <p class="text-sm">No locations created yet</p>
+                            <p class="text-xs mt-1">Create a warehouse first to add locations</p>
+                        </div>
+                    `;
+                    return;
+                }
+
+                locationsList.innerHTML = locations.map(location => `
+                    <div class="flex items-center justify-between p-4 bg-background-main rounded-lg border border-primary/5 hover:border-primary/20 transition-colors">
+                        <div class="flex items-center gap-3">
+                            <div class="size-10 bg-primary/10 rounded-lg flex items-center justify-center">
+                                <span class="material-symbols-outlined text-primary">place</span>
+                            </div>
+                            <div>
+                                <h3 class="font-semibold text-slate-800">${location.name}</h3>
+                                <p class="text-sm text-slate-500">${location.code} • ${location.warehouse_name}</p>
+                            </div>
+                        </div>
+                        <button onclick="deleteLocationData(${location.id})" 
+                            class="text-late-red hover:bg-late-red/5 p-2 rounded-lg transition-colors">
+                            <span class="material-symbols-outlined">delete</span>
+                        </button>
+                    </div>
+                `).join('');
+            } catch (error) {
+                showNotification('Error loading locations', 'error');
+            }
+        }
+
+        async function deleteLocationData(id) {
+            if (confirm('Are you sure you want to delete this location?')) {
+                try {
+                    await api.deleteLocation(id);
+                    showNotification('Location deleted successfully', 'success');
+                    loadLocationsList();
+                } catch (error) {
+                    showNotification(error.message || 'Error deleting location', 'error');
+                }
+            }
+        }
+
+        function showNotification(message, type) {
+            const notification = document.createElement('div');
+            notification.className = `fixed top-4 right-4 px-4 py-3 rounded-lg shadow-lg z-50 ${
+                type === 'success' ? 'bg-status-green text-white' : 'bg-late-red text-white'
+            }`;
+            notification.textContent = message;
+            document.body.appendChild(notification);
+            setTimeout(() => notification.remove(), 3000);
+        }
+    </script>
+</body>
+</html>

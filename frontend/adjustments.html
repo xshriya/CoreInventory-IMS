@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport"/>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#008B8B",
+                        "background-main": "#FDFBF6",
+                        "background-card": "#FFFFF5",
+                        "slate-grey": "#4A5568",
+                        "late-red": "#C25252",
+                        "status-green": "#6A966A"
+                    },
+                    fontFamily: {
+                        "display": ["Space Grotesk"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+    <style type="text/tailwindcss">
+        :root {
+            --primary: #008B8B;
+            --bg-main: #FDFBF6;
+            --bg-card: #FFFFF5;
+            --late-red: #C25252;
+            --status-green: #6A966A;
+        }
+    </style>
+    <title>Adjustments - LogisticsPro</title>
+</head>
+<body class="bg-background-main font-display text-slate-800 min-h-screen">
+    <div class="flex h-screen flex-col">
+        <header class="flex items-center justify-between border-b border-primary/10 px-3 sm:px-4 md:px-6 lg:px-8 py-3 sm:py-4 bg-background-main sticky top-0 z-40">
+            <div class="flex items-center gap-2 sm:gap-3 text-primary">
+                <span class="material-symbols-outlined text-2xl sm:text-3xl">package_2</span>
+                <h2 class="text-lg sm:text-xl font-bold tracking-tight">LogisticsPro</h2>
+            </div>
+            <div class="flex items-center gap-2 sm:gap-3">
+                <div class="text-right hidden sm:block">
+                    <p class="text-xs font-bold text-slate-700" id="userNameDisplay">Admin Terminal</p>
+                    <p class="text-[10px] text-slate-400 uppercase tracking-wider">Logistics HQ</p>
+                </div>
+                <div class="size-8 sm:size-10 rounded-full border-2 border-primary bg-cover bg-center" data-alt="User profile avatar icon" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAY04hioCw3DcSV_nhxUETggG94VAfJ1654paCWJtB4cFbLGVAa0BmmbUew_Uj-0A0TVm_uO5p7mFVYN34mtMfpKgr_RwR90IPSNU06qTOe3ItY9a1aFJ8czN0ITXa3ejOlVWX_yq0_hLjluSl77OUpiXooaSnUKLdUVbR1oDVmwEz9H8Td-Eq0WHDnxO9rtG1rHsTtWlsLnKGbTGPH5sG8D3TJh7bX-Lxxy-1pHt6JnemxpPCsCdgFKEUXUU0nxB5RHZN4ax0F9DOc')"></div>
+            </div>
+        </header>
+
+        <main class="flex-1 flex overflow-hidden">
+            <!-- Mobile menu button -->
+            <button class="lg:hidden fixed top-20 left-4 z-50 p-3 bg-primary text-white rounded-lg shadow-lg" onclick="toggleMobileSidebar()">
+                <span class="material-symbols-outlined">menu</span>
+            </button>
+
+            <!-- Mobile sidebar overlay -->
+            <div id="mobileSidebarOverlay" class="lg:hidden fixed inset-0 bg-black bg-opacity-50 z-40 hidden" onclick="closeMobileSidebar()"></div>
+
+            <aside id="sidebar" class="fixed lg:relative left-0 top-0 h-full w-64 sm:w-72 border-r border-primary/5 p-4 sm:p-6 hidden lg:flex flex-col gap-6 sm:gap-8 bg-background-main z-50 lg:z-auto transform -translate-x-full lg:translate-x-0 transition-transform duration-300">
+                <section>
+                    <h3 class="text-xs font-bold text-primary/70 uppercase tracking-[0.2em] mb-6">Navigation</h3>
+                    <div class="flex flex-col gap-1">
+                        <a class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-primary/5 text-slate-600 transition-colors" href="saas-dashboard.html">
+                            <span class="material-symbols-outlined text-xl">grid_view</span>
+                            <span>Dashboard</span>
+                        </a>
+                        <a class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-primary/5 text-slate-600 transition-colors" href="delivery.html">
+                            <span class="material-symbols-outlined text-xl">local_shipping</span>
+                            <span>Operations</span>
+                        </a>
+                        <a class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-primary/5 text-slate-600 transition-colors" href="stock.html">
+                            <span class="material-symbols-outlined text-xl">warehouse</span>
+                            <span>Stock</span>
+                        </a>
+                        <a class="flex items-center gap-3 px-4 py-3 rounded-xl bg-primary text-white font-bold" href="adjustments.html">
+                            <span class="material-symbols-outlined text-xl">tune</span>
+                            <span>Adjustments</span>
+                        </a>
+                        <a class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-primary/5 text-slate-600 transition-colors" href="move-history.html">
+                            <span class="material-symbols-outlined text-xl">history</span>
+                            <span>Move History</span>
+                        </a>
+                        <div class="border-t border-primary/10 my-4"></div>
+                        <button onclick="logout()" class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-late-red/5 text-slate-600 hover:text-late-red transition-colors w-full text-left">
+                            <span class="material-symbols-outlined text-xl">logout</span>
+                            <span>Logout</span>
+                        </button>
+                    </div>
+                </section>
+            </aside>
+
+            <section class="flex-1 overflow-y-auto p-4 sm:p-6 lg:p-8 xl:p-12">
+                <header class="mb-6 sm:mb-8">
+                    <h1 class="text-2xl sm:text-3xl lg:text-4xl font-black tracking-tighter mb-2 text-slate-800">Stock Adjustments</h1>
+                    <p class="text-slate-500 text-sm sm:text-base">Manage inventory adjustments and corrections.</p>
+                </header>
+
+                <div class="bg-background-card border border-primary/10 rounded-xl p-6 shadow-sm">
+                    <div class="flex items-center justify-center h-48">
+                        <div class="text-center">
+                            <span class="material-symbols-outlined text-6xl text-primary/30 mb-4">tune</span>
+                            <p class="text-slate-500">Adjustments feature coming soon</p>
+                            <p class="text-sm text-slate-400 mt-2">This page will allow you to make stock corrections and adjustments.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script>
+        function toggleMobileSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('mobileSidebarOverlay');
+            if (sidebar && overlay) {
+                sidebar.classList.toggle('-translate-x-full');
+                sidebar.classList.toggle('translate-x-0');
+                overlay.classList.toggle('hidden');
+            }
+        }
+
+        function closeMobileSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('mobileSidebarOverlay');
+            if (sidebar && overlay) {
+                sidebar.classList.add('-translate-x-full');
+                sidebar.classList.remove('translate-x-0');
+                overlay.classList.add('hidden');
+            }
+        }
+
+        window.toggleMobileSidebar = toggleMobileSidebar;
+        window.closeMobileSidebar = closeMobileSidebar;
+    </script>
+    <script src="api.js"></script>
+    <script src="auth-check.js"></script>
+</body>
+</html>

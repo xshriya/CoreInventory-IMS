@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport"/>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#008B8B",
+                        "background-main": "#FDFBF6",
+                        "background-card": "#FFFFF5",
+                        "slate-grey": "#4A5568",
+                        "late-red": "#C25252",
+                        "status-green": "#6A966A"
+                    },
+                    fontFamily: {
+                        "display": ["Space Grotesk"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+    <style type="text/tailwindcss">
+        :root {
+            --primary: #008B8B;
+            --bg-main: #FDFBF6;
+            --bg-card: #FFFFF5;
+            --late-red: #C25252;
+            --status-green: #6A966A;
+        }
+    </style>
+    <title>Move History - LogisticsPro</title>
+</head>
+<body class="bg-background-main font-display text-slate-800 min-h-screen">
+    <div class="flex h-screen flex-col">
+        <header class="flex items-center justify-between border-b border-primary/10 px-3 sm:px-4 md:px-6 lg:px-8 py-3 sm:py-4 bg-background-main sticky top-0 z-40">
+            <div class="flex items-center gap-2 sm:gap-3 text-primary">
+                <span class="material-symbols-outlined text-2xl sm:text-3xl">package_2</span>
+                <h2 class="text-lg sm:text-xl font-bold tracking-tight">LogisticsPro</h2>
+            </div>
+            <div class="flex items-center gap-2 sm:gap-3">
+                <div class="text-right hidden sm:block">
+                    <p class="text-xs font-bold text-slate-700" id="userNameDisplay">Admin Terminal</p>
+                    <p class="text-[10px] text-slate-400 uppercase tracking-wider">Logistics HQ</p>
+                </div>
+                <div class="size-8 sm:size-10 rounded-full border-2 border-primary bg-cover bg-center" data-alt="User profile avatar icon" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAY04hioCw3DcSV_nhxUETggG94VAfJ1654paCWJtB4cFbLGVAa0BmmbUew_Uj-0A0TVm_uO5p7mFVYN34mtMfpKgr_RwR90IPSNU06qTOe3ItY9a1aFJ8czN0ITXa3ejOlVWX_yq0_hLjluSl77OUpiXooaSnUKLdUVbR1oDVmwEz9H8Td-Eq0WHDnxO9rtG1rHsTtWlsLnKGbTGPH5sG8D3TJh7bX-Lxxy-1pHt6JnemxpPCsCdgFKEUXUU0nxB5RHZN4ax0F9DOc')"></div>
+            </div>
+        </header>
+
+        <main class="flex-1 flex overflow-hidden">
+            <!-- Mobile menu button -->
+            <button class="lg:hidden fixed top-20 left-4 z-50 p-3 bg-primary text-white rounded-lg shadow-lg" onclick="toggleMobileSidebar()">
+                <span class="material-symbols-outlined">menu</span>
+            </button>
+
+            <!-- Mobile sidebar overlay -->
+            <div id="mobileSidebarOverlay" class="lg:hidden fixed inset-0 bg-black bg-opacity-50 z-40 hidden" onclick="closeMobileSidebar()"></div>
+
+            <aside id="sidebar" class="fixed lg:relative left-0 top-0 h-full w-64 sm:w-72 border-r border-primary/5 p-4 sm:p-6 hidden lg:flex flex-col gap-6 sm:gap-8 bg-background-main z-50 lg:z-auto transform -translate-x-full lg:translate-x-0 transition-transform duration-300">
+                <section>
+                    <h3 class="text-xs font-bold text-primary/70 uppercase tracking-[0.2em] mb-6">Navigation</h3>
+                    <div class="flex flex-col gap-1">
+                        <a class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-primary/5 text-slate-600 transition-colors" href="saas-dashboard.html">
+                            <span class="material-symbols-outlined text-xl">grid_view</span>
+                            <span>Dashboard</span>
+                        </a>
+                        <a class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-primary/5 text-slate-600 transition-colors" href="delivery.html">
+                            <span class="material-symbols-outlined text-xl">local_shipping</span>
+                            <span>Operations</span>
+                        </a>
+                        <a class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-primary/5 text-slate-600 transition-colors" href="stock.html">
+                            <span class="material-symbols-outlined text-xl">warehouse</span>
+                            <span>Stock</span>
+                        </a>
+                        <a class="flex items-center gap-3 px-4 py-3 rounded-xl bg-primary text-white font-bold" href="move-history.html">
+                            <span class="material-symbols-outlined text-xl">history</span>
+                            <span>Move History</span>
+                        </a>
+                        <div class="border-t border-primary/10 my-2"></div>
+                        <a class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-primary/5 text-slate-600 transition-colors" href="settings.html">
+                            <span class="material-symbols-outlined text-xl">settings</span>
+                            <span>Settings</span>
+                            <span class="material-symbols-outlined text-base text-slate-400">expand_more</span>
+                        </a>
+                        <div class="flex flex-col gap-1 pl-8">
+                            <a class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-primary/5 text-slate-600 transition-colors" href="warehouse.html">
+                                <span class="material-symbols-outlined text-xl">store</span>
+                                <span>Warehouse</span>
+                            </a>
+                            <a class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-primary/5 text-slate-600 transition-colors" href="location.html">
+                                <span class="material-symbols-outlined text-xl">place</span>
+                                <span>Locations</span>
+                            </a>
+                        </div>
+                        <div class="border-t border-primary/10 my-2"></div>
+                        <button onclick="logout()" class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-late-red/5 text-slate-600 hover:text-late-red transition-colors w-full text-left">
+                            <span class="material-symbols-outlined text-xl">logout</span>
+                            <span>Logout</span>
+                        </button>
+                    </div>
+                </section>
+            </aside>
+
+            <section class="flex-1 overflow-y-auto p-4 sm:p-6 lg:p-8 xl:p-12 lg:ml-0">
+                <header class="mb-4 sm:mb-6 lg:mb-8">
+                    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                        <div class="flex flex-col sm:flex-row sm:items-center gap-4">
+                            <div class="relative">
+                                <button onclick="toggleNewDropdown()" class="bg-primary hover:bg-primary/90 text-white font-bold py-2.5 px-4 sm:px-6 rounded-lg transition-all shadow-lg shadow-primary/20 text-sm flex items-center gap-2 w-full sm:w-auto justify-center">
+                                    <span class="material-symbols-outlined">add</span>
+                                    NEW
+                                    <span class="material-symbols-outlined text-sm">expand_more</span>
+                                </button>
+                                
+                                <!-- Dropdown Menu -->
+                                <div id="newDropdown" class="hidden absolute top-full left-0 mt-2 w-48 bg-background-card border border-primary/10 rounded-lg shadow-lg z-50">
+                                    <div class="py-1">
+                                        <a href="receipts-form.html" class="flex items-center gap-3 px-4 py-3 text-sm text-slate-700 hover:bg-primary/5 transition-colors">
+                                            <span class="material-symbols-outlined text-primary">inventory</span>
+                                            Create Receipt
+                                        </a>
+                                        <a href="delivery-form.html" class="flex items-center gap-3 px-4 py-3 text-sm text-slate-700 hover:bg-primary/5 transition-colors">
+                                            <span class="material-symbols-outlined text-primary">local_shipping</span>
+                                            Create Delivery
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="text-center sm:text-left">
+                                <h1 class="text-xl sm:text-2xl lg:text-3xl xl:text-4xl font-black tracking-tighter text-slate-800">Move History</h1>
+                                <p class="text-slate-500 text-sm sm:text-base lg:text-lg">Track all inventory movements and transfers.</p>
+                            </div>
+                        </div>
+                        <div class="flex flex-col sm:flex-row items-center gap-3">
+                            <div class="relative w-full sm:w-auto">
+                                <input type="text" id="searchInput" 
+                                    class="w-full sm:w-48 lg:w-64 rounded-lg text-slate-800 focus:outline-0 focus:ring-2 focus:ring-primary/20 border border-primary/10 bg-background-main h-10 placeholder:text-slate-400 pl-10 pr-4 text-sm font-normal leading-normal"
+                                    placeholder="Search delivery based on reference & contacts"
+                                    onkeyup="searchMoves()">
+                                <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-lg">search</span>
+                            </div>
+                            <div class="flex gap-2">
+                                <button id="listViewBtn" onclick="setView('list')" class="p-2.5 rounded-lg bg-primary text-white transition-colors">
+                                    <span class="material-symbols-outlined">view_list</span>
+                                </button>
+                                <button id="kanbanViewBtn" onclick="setView('kanban')" class="p-2.5 rounded-lg hover:bg-primary/5 text-slate-600 transition-colors">
+                                    <span class="material-symbols-outlined">view_kanban</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </header>
+
+                <!-- List View (Default) -->
+                <div id="listView" class="bg-background-card border border-primary/10 rounded-xl p-4 sm:p-6 lg:p-8 shadow-sm">
+                    <div class="overflow-x-auto -mx-4 sm:mx-0 px-4 sm:px-0">
+                        <table class="w-full min-w-[600px]">
+                            <thead>
+                                <tr class="border-b border-primary/10">
+                                    <th class="text-left py-3 px-2 sm:px-4 font-semibold text-slate-700 text-xs sm:text-sm">Reference</th>
+                                    <th class="text-left py-3 px-2 sm:px-4 font-semibold text-slate-700 text-xs sm:text-sm">Date</th>
+                                    <th class="text-left py-3 px-2 sm:px-4 font-semibold text-slate-700 text-xs sm:text-sm">Contact</th>
+                                    <th class="text-left py-3 px-2 sm:px-4 font-semibold text-slate-700 text-xs sm:text-sm">From</th>
+                                    <th class="text-left py-3 px-2 sm:px-4 font-semibold text-slate-700 text-xs sm:text-sm">To</th>
+                                    <th class="text-left py-3 px-2 sm:px-4 font-semibold text-slate-700 text-xs sm:text-sm">Quantity</th>
+                                    <th class="text-left py-3 px-2 sm:px-4 font-semibold text-slate-700 text-xs sm:text-sm">Status</th>
+                                </tr>
+                            </thead>
+                            <tbody id="moveTableBody">
+                                <tr>
+                                    <td colspan="7" class="text-center py-8 text-slate-400">
+                                        <span class="material-symbols-outlined text-4xl mb-2">history</span>
+                                        <p class="text-sm">No move history found</p>
+                                        <p class="text-xs mt-1">Moves will appear here when receipts and deliveries are processed</p>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Kanban View -->
+                <div id="kanbanView" class="hidden">
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 lg:gap-6">
+                        <!-- Ready Column -->
+                        <div class="bg-background-card border border-primary/10 rounded-xl p-3 sm:p-4 shadow-sm">
+                            <div class="flex items-center justify-between mb-3 sm:mb-4">
+                                <h3 class="font-semibold text-slate-800 flex items-center gap-2 text-sm sm:text-base">
+                                    <span class="material-symbols-outlined text-status-green text-lg sm:text-xl">circle</span>
+                                    Ready
+                                </h3>
+                                <span id="readyCount" class="text-xs sm:text-sm font-medium text-slate-500">0</span>
+                            </div>
+                            <div id="readyColumn" class="space-y-2 sm:space-y-3 min-h-[150px] sm:min-h-[200px]">
+                                <!-- Move cards will be inserted here -->
+                            </div>
+                        </div>
+
+                        <!-- In Transit Column -->
+                        <div class="bg-background-card border border-primary/10 rounded-xl p-3 sm:p-4 shadow-sm">
+                            <div class="flex items-center justify-between mb-3 sm:mb-4">
+                                <h3 class="font-semibold text-slate-800 flex items-center gap-2 text-sm sm:text-base">
+                                    <span class="material-symbols-outlined text-primary text-lg sm:text-xl">circle</span>
+                                    In Transit
+                                </h3>
+                                <span id="inTransitCount" class="text-xs sm:text-sm font-medium text-slate-500">0</span>
+                            </div>
+                            <div id="inTransitColumn" class="space-y-2 sm:space-y-3 min-h-[150px] sm:min-h-[200px]">
+                                <!-- Move cards will be inserted here -->
+                            </div>
+                        </div>
+
+                        <!-- Completed Column -->
+                        <div class="bg-background-card border border-primary/10 rounded-xl p-3 sm:p-4 shadow-sm">
+                            <div class="flex items-center justify-between mb-3 sm:mb-4">
+                                <h3 class="font-semibold text-slate-800 flex items-center gap-2 text-sm sm:text-base">
+                                    <span class="material-symbols-outlined text-slate-400 text-lg sm:text-xl">circle</span>
+                                    Completed
+                                </h3>
+                                <span id="completedCount" class="text-xs sm:text-sm font-medium text-slate-500">0</span>
+                            </div>
+                            <div id="completedColumn" class="space-y-2 sm:space-y-3 min-h-[150px] sm:min-h-[200px]">
+                                <!-- Move cards will be inserted here -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="api.js"></script>
+    <script src="auth-check.js"></script>
+    <script src="move-history.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Mobile sidebar functions
+            function toggleMobileSidebar() {
+                const sidebar = document.getElementById('sidebar');
+                const overlay = document.getElementById('mobileSidebarOverlay');
+                
+                if (sidebar && overlay) {
+                    sidebar.classList.toggle('-translate-x-full');
+                    sidebar.classList.toggle('translate-x-0');
+                    overlay.classList.toggle('hidden');
+                }
+            }
+
+            function closeMobileSidebar() {
+                const sidebar = document.getElementById('sidebar');
+                const overlay = document.getElementById('mobileSidebarOverlay');
+                
+                if (sidebar && overlay) {
+                    sidebar.classList.add('-translate-x-full');
+                    sidebar.classList.remove('translate-x-0');
+                    overlay.classList.add('hidden');
+                }
+            }
+
+            window.toggleMobileSidebar = toggleMobileSidebar;
+            window.closeMobileSidebar = closeMobileSidebar;
+
+            // Initialize move history
+            loadMoveHistory();
+        });
+    </script>
+</body>
+</html>

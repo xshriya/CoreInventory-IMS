@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Login - Inventory Management System</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#008B8B",
+                        "background-main": "#FDFBF6",
+                        "background-card": "#FFFFF5",
+                        "slate-grey": "#4A5568",
+                        "late-red": "#C25252",
+                        "status-green": "#6A966A"
+                    },
+                    fontFamily: {
+                        "display": ["Space Grotesk", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+</head>
+<body class="bg-background-main font-display text-slate-800 min-h-screen">
+<div class="relative flex h-auto min-h-screen w-full flex-col group/design-root overflow-x-hidden">
+<div class="layout-container flex h-full grow flex-col">
+<header class="flex items-center justify-between whitespace-nowrap border-b border-solid border-primary/10 px-6 md:px-10 py-4 bg-background-main">
+<div class="flex items-center gap-3">
+<div class="flex items-center justify-center size-8 bg-primary rounded-lg text-white">
+<span class="material-symbols-outlined !text-xl">inventory_2</span>
+</div>
+<h2 class="text-slate-800 text-lg font-bold leading-tight tracking-tight">LogisticsPro</h2>
+</div>
+</header>
+<main class="flex flex-1 items-center justify-center p-4 sm:p-6 lg:p-10">
+<div class="layout-content-container flex flex-col w-full max-w-[440px] bg-background-card p-8 rounded-xl shadow-sm border border-primary/5">
+<div class="flex flex-col gap-2 mb-8">
+<h1 id="formTitle" class="text-slate-800 text-3xl font-black leading-tight tracking-tight">Welcome Back</h1>
+<p id="formSubtitle" class="text-slate-500 text-sm font-normal">Manage your shipments and track deliveries in real-time.</p>
+</div>
+<form class="flex flex-col gap-5">
+<label class="flex flex-col w-full">
+<span class="text-slate-700 text-sm font-semibold pb-2">Login ID</span>
+<div class="relative">
+<input id="loginId" class="form-input flex w-full rounded-lg text-slate-800 focus:outline-0 focus:ring-2 focus:ring-primary/20 border border-primary/10 bg-background-main h-12 placeholder:text-slate-400 p-4 pr-10 text-base font-normal leading-normal transition-all duration-200" placeholder="Enter your login ID" type="text"/>
+<span id="loginIdIcon" class="validation-icon absolute right-4 top-1/2 -translate-y-1/2 hidden"></span>
+</div>
+<span id="loginIdStatus" class="validation-status text-xs font-medium mt-1 hidden"></span>
+</label>
+<label class="flex flex-col w-full" id="emailLabel">
+<span class="text-slate-700 text-sm font-semibold pb-2">Email</span>
+<div class="relative">
+<input id="email" class="form-input flex w-full rounded-lg text-slate-800 focus:outline-0 focus:ring-2 focus:ring-primary/20 border border-primary/10 bg-background-main h-12 placeholder:text-slate-400 p-4 pr-10 text-base font-normal leading-normal transition-all duration-200" placeholder="Email will be auto-filled" type="email" readonly/>
+<span id="emailIcon" class="validation-icon absolute right-4 top-1/2 -translate-y-1/2 hidden"></span>
+</div>
+<span id="emailStatus" class="validation-status text-xs font-medium mt-1 hidden"></span>
+</label>
+<label class="flex flex-col w-full" id="passwordLabel">
+<div class="flex justify-between items-center pb-2">
+<span class="text-slate-700 text-sm font-semibold">Password</span>
+<a class="text-primary text-xs font-semibold hover:underline" href="#" id="forgotPasswordLink">Forgot Password?</a>
+</div>
+<div class="relative flex w-full items-stretch">
+<input id="password" class="form-input flex w-full rounded-lg text-slate-800 focus:outline-0 focus:ring-2 focus:ring-primary/20 border border-primary/10 bg-background-main h-12 placeholder:text-slate-400 p-4 pr-12 text-base font-normal leading-normal" placeholder="Enter your password" type="password"/>
+<button id="passwordToggle" class="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 hover:text-primary transition-colors" type="button">
+<span class="material-symbols-outlined !text-xl">visibility</span>
+</button>
+</div>
+</label>
+<button id="loginButton" class="w-full bg-primary hover:bg-primary/90 text-white font-bold py-3.5 rounded-lg transition-all shadow-lg shadow-primary/20 mt-2" type="submit">
+                            Log In
+                        </button>
+</form>
+<div class="relative flex py-8 items-center">
+<div class="flex-grow border-t border-primary/10"></div>
+<span class="flex-shrink mx-4 text-slate-400 text-xs font-medium uppercase tracking-widest">Or continue with</span>
+<div class="flex-grow border-t border-primary/10"></div>
+</div>
+<div class="grid grid-cols-2 gap-4">
+<button class="flex items-center justify-center gap-2 border border-primary/10 rounded-lg py-2.5 hover:bg-primary/5 transition-colors">
+<img alt="" class="w-5 h-5" data-alt="Google logo icon" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCgJUnJ8kEW9GHiAPHgFpgD34l_VbOFLUIV-OWZKtAYE2WlnoqjqlE2qnrsUVdMQTrPjWeNogiI5Z7ce2-ihELrb1cQ3FxlkN9uhtrmULERScnRqEJ_RbN4WbDwqYC33hmWgPiZcS80XvYocpqYz2dN07pEimJv8eGPB7q_drHAszTn6b4r5ldhOF_zVv_mbrSpZ9-4uOOj2Y4cx8q-nExh87pI_f5WFetRWDSxQV9OrcreEK6OX7yr8t1nXUI7jytvI5vhpfQc2uI8"/>
+<span class="text-sm font-semibold text-slate-700">Google</span>
+</button>
+<button class="flex items-center justify-center gap-2 border border-primary/10 rounded-lg py-2.5 hover:bg-primary/5 transition-colors">
+<span class="material-symbols-outlined text-slate-500 !text-xl">domain</span>
+<span class="text-sm font-semibold text-slate-700">SSO</span>
+</button>
+</div>
+<div class="mt-10 text-center">
+<p class="text-slate-500 text-sm">
+                            Don't have an account? 
+                            <a class="text-primary font-bold hover:underline ml-1" href="signup.html">Sign up</a>
+</p>
+</div>
+</div>
+</main>
+<footer class="p-6 text-center">
+<p class="text-slate-400 text-xs">
+                    &copy; 2024 LogisticsPro Inventory Systems. All rights reserved.
+                </p>
+</footer>
+</div>
+</div>
+
+<script>
+    const API_URL = 'http://localhost:3000';
+    
+    // Debounce function
+    function debounce(func, wait) {
+        let timeout;
+        return function executedFunction(...args) {
+            const later = () => {
+                clearTimeout(timeout);
+                func(...args);
+            };
+            clearTimeout(timeout);
+            timeout = setTimeout(later, wait);
+        };
+    }
+    
+    // Helper functions for visual feedback
+    function setValid(input, icon, status, message) {
+        input.classList.remove('border-red-400', 'border-primary/10');
+        input.classList.add('border-green-400');
+        if (icon) {
+            icon.classList.remove('hidden');
+            icon.innerHTML = '<svg class="w-5 h-5 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>';
+        }
+        if (status) {
+            status.classList.remove('hidden', 'text-red-500');
+            status.classList.add('text-green-500');
+            status.textContent = message || '';
+        }
+    }
+    
+    function setInvalid(input, icon, status, message) {
+        input.classList.remove('border-green-400', 'border-primary/10');
+        input.classList.add('border-red-400');
+        if (icon) {
+            icon.classList.remove('hidden');
+            icon.innerHTML = '<svg class="w-5 h-5 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>';
+        }
+        if (status) {
+            status.classList.remove('hidden', 'text-green-500');
+            status.classList.add('text-red-500');
+            status.textContent = message || 'Invalid';
+        }
+    }
+    
+    function setNeutral(input, icon, status) {
+        input.classList.remove('border-green-400', 'border-red-400');
+        input.classList.add('border-primary/10');
+        if (icon) icon.classList.add('hidden');
+        if (status) status.classList.add('hidden');
+    }
+    
+    function setChecking(input, icon, status) {
+        input.classList.remove('border-green-400', 'border-red-400');
+        input.classList.add('border-yellow-400');
+        if (icon) {
+            icon.classList.remove('hidden');
+            icon.innerHTML = '<svg class="w-5 h-5 text-yellow-500 animate-spin" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path></svg>';
+        }
+        if (status) {
+            status.classList.remove('hidden', 'text-green-500', 'text-red-500');
+            status.classList.add('text-yellow-500');
+            status.textContent = 'Checking...';
+        }
+    }
+    
+    // Login ID validation and email auto-fill
+    const loginIdInput = document.getElementById('loginId');
+    const loginIdIcon = document.getElementById('loginIdIcon');
+    const loginIdStatus = document.getElementById('loginIdStatus');
+    const emailInput = document.getElementById('email');
+    const emailIcon = document.getElementById('emailIcon');
+    const emailStatus = document.getElementById('emailStatus');
+    
+    let userEmail = '';
+    
+    const checkLoginId = debounce(async (value) => {
+        if (!value) {
+            setNeutral(loginIdInput, loginIdIcon, loginIdStatus);
+            setNeutral(emailInput, emailIcon, emailStatus);
+            emailInput.value = '';
+            userEmail = '';
+            return;
+        }
+        
+        // Check format first
+        if (value.length < 6 || value.length > 12 || !/^[a-zA-Z0-9]+$/.test(value)) {
+            setInvalid(loginIdInput, loginIdIcon, loginIdStatus, '6-12 alphanumeric chars');
+            setNeutral(emailInput, emailIcon, emailStatus);
+            emailInput.value = '';
+            userEmail = '';
+            return;
+        }
+        
+        // Check if login ID exists via API
+        setChecking(loginIdInput, loginIdIcon, loginIdStatus);
+        
+        try {
+            const response = await fetch(`${API_URL}/api/get-email/${encodeURIComponent(value)}`);
+            const data = await response.json();
+            
+            if (response.ok) {
+                setValid(loginIdInput, loginIdIcon, loginIdStatus, 'Valid');
+                emailInput.value = data.email;
+                userEmail = data.email;
+                setValid(emailInput, emailIcon, emailStatus, 'Auto-filled');
+            } else {
+                setInvalid(loginIdInput, loginIdIcon, loginIdStatus, data.error || 'Not found');
+                setNeutral(emailInput, emailIcon, emailStatus);
+                emailInput.value = '';
+                userEmail = '';
+            }
+        } catch (error) {
+            setNeutral(loginIdInput, loginIdIcon, loginIdStatus);
+            setNeutral(emailInput, emailIcon, emailStatus);
+            emailInput.value = '';
+            userEmail = '';
+        }
+    }, 300);
+    
+    loginIdInput.addEventListener('input', (e) => {
+        checkLoginId(e.target.value.trim());
+    });
+    
+    // Password visibility toggle
+    const passwordInput = document.getElementById('password');
+    const passwordToggle = document.getElementById('passwordToggle');
+    
+    if (passwordToggle && passwordInput) {
+        passwordToggle.addEventListener('click', function() {
+            const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+            passwordInput.setAttribute('type', type);
+            
+            const icon = this.querySelector('span');
+            icon.textContent = type === 'text' ? 'visibility_off' : 'visibility';
+        });
+    }
+    
+    // Login form submission
+    const loginForm = document.querySelector('form');
+    const loginButton = document.getElementById('loginButton');
+    
+    if (loginForm) {
+        loginForm.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const email = userEmail;
+            const password = passwordInput.value;
+            
+            if (!email || !password) {
+                showError('Please enter a valid Login ID and password');
+                return;
+            }
+            
+            loginButton.textContent = 'Signing in...';
+            loginButton.disabled = true;
+            
+            try {
+                const response = await fetch(`${API_URL}/api/login`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email, password })
+                });
+
+                const data = await response.json();
+
+                if (!response.ok) {
+                    showError(data.error);
+                    loginButton.textContent = 'Log In';
+                    loginButton.disabled = false;
+                    return;
+                }
+
+                localStorage.setItem('jwtToken', data.token);
+                localStorage.setItem('userInfo', JSON.stringify(data.user));
+                window.location.href = 'saas-dashboard.html';
+
+            } catch (error) {
+                showError("Server error. Ensure backend is running.");
+                loginButton.textContent = 'Log In';
+                loginButton.disabled = false;
+            }
+        });
+    }
+    
+    // Forgot password link
+    const forgotPasswordLink = document.getElementById('forgotPasswordLink');
+    if (forgotPasswordLink) {
+        forgotPasswordLink.addEventListener('click', function(e) {
+            e.preventDefault();
+            if (userEmail) {
+                window.location.href = `forgot-password.html?email=${encodeURIComponent(userEmail)}`;
+            } else {
+                showError('Please enter a valid Login ID first');
+            }
+        });
+    }
+    
+    // Error display helper
+    function showError(message) {
+        const existingError = document.querySelector('.error-message');
+        if (existingError) existingError.remove();
+        
+        const errorDiv = document.createElement('div');
+        errorDiv.className = 'error-message bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg mb-4 text-sm';
+        errorDiv.textContent = message;
+        
+        const form = document.querySelector('form');
+        form.insertBefore(errorDiv, form.firstChild);
+        
+        setTimeout(() => errorDiv.remove(), 5000);
+    }
+</script>
+
+</body></html>

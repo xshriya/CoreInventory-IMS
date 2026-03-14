@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport"/>
+<title>Sign Up - Inventory Management System</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#008B8B",
+                        "background-main": "#FDFBF6",
+                        "background-card": "#FFFFF5",
+                        "slate-grey": "#4A5568",
+                        "late-red": "#C25252",
+                        "status-green": "#6A966A"
+                    },
+                    fontFamily: {
+                        "display": ["Space Grotesk", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+</head>
+<body class="bg-background-main font-display text-slate-800 min-h-screen">
+<div class="relative flex h-auto min-h-screen w-full flex-col group/design-root overflow-x-hidden">
+<div class="layout-container flex h-full grow flex-col">
+<header class="flex items-center justify-between whitespace-nowrap border-b border-solid border-primary/10 px-4 sm:px-6 md:px-10 py-3 sm:py-4 bg-background-main">
+<div class="flex items-center gap-2 sm:gap-3">
+<div class="flex items-center justify-center size-6 sm:size-8 bg-primary rounded-lg text-white">
+<span class="material-symbols-outlined !text-lg sm:!text-xl">inventory_2</span>
+</div>
+<h2 class="text-slate-800 text-sm sm:text-base md:text-lg font-bold leading-tight tracking-tight">LogisticsPro</h2>
+</div>
+</header>
+<main class="flex flex-1 items-center justify-center p-3 sm:p-4 md:p-6 lg:p-8 xl:p-10 min-h-[calc(100vh-120px)]">
+<div class="layout-content-container flex flex-col w-full max-w-[400px] sm:max-w-[440px] bg-background-card p-6 sm:p-8 rounded-xl shadow-sm border border-primary/5">
+<div class="flex flex-col gap-2 mb-6 sm:mb-8">
+<h1 class="text-slate-800 text-2xl sm:text-3xl font-black leading-tight tracking-tight">Create Account</h1>
+<p class="text-slate-500 text-sm font-normal">Sign up to start managing your inventory.</p>
+</div>
+<form id="signupForm" class="flex flex-col gap-4 sm:gap-5">
+<label class="flex flex-col w-full">
+<div class="flex justify-between items-center pb-2">
+<span class="text-slate-700 text-sm font-semibold">Login ID</span>
+<span id="loginIdStatus" class="validation-status text-xs font-medium hidden"></span>
+</div>
+<div class="relative">
+<input id="loginId" class="form-input flex w-full rounded-lg text-slate-800 focus:outline-0 focus:ring-2 focus:ring-primary/20 border border-primary/10 bg-background-main h-11 sm:h-12 placeholder:text-slate-400 p-3 sm:p-4 pr-10 text-sm sm:text-base font-normal leading-normal transition-all duration-200" placeholder="Enter login ID" type="text"/>
+<span id="loginIdIcon" class="validation-icon absolute right-3 top-1/2 -translate-y-1/2 hidden">
+</span>
+</div>
+<p id="loginIdHint" class="text-xs text-slate-400 mt-1 hidden">6-12 alphanumeric characters</p>
+</label>
+<label class="flex flex-col w-full">
+<div class="flex justify-between items-center pb-2">
+<span class="text-slate-700 text-sm font-semibold">Email ID</span>
+<span id="emailStatus" class="validation-status text-xs font-medium hidden"></span>
+</div>
+<div class="relative">
+<input id="email" class="form-input flex w-full rounded-lg text-slate-800 focus:outline-0 focus:ring-2 focus:ring-primary/20 border border-primary/10 bg-background-main h-11 sm:h-12 placeholder:text-slate-400 p-3 sm:p-4 pr-10 text-sm sm:text-base font-normal leading-normal transition-all duration-200" placeholder="Enter email ID" type="email"/>
+<span id="emailIcon" class="validation-icon absolute right-3 top-1/2 -translate-y-1/2 hidden">
+</span>
+</div>
+</label>
+<label class="flex flex-col w-full">
+<div class="flex justify-between items-center pb-2">
+<span class="text-slate-700 text-sm font-semibold">Password</span>
+<span id="passwordStrength" class="text-xs font-medium hidden"></span>
+</div>
+<div class="relative">
+<input id="password" class="form-input flex w-full rounded-lg text-slate-800 focus:outline-0 focus:ring-2 focus:ring-primary/20 border border-primary/10 bg-background-main h-11 sm:h-12 placeholder:text-slate-400 p-3 sm:p-4 pr-10 text-sm sm:text-base font-normal leading-normal transition-all duration-200" placeholder="Enter password" type="password"/>
+<button id="passwordToggle" type="button" class="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-primary transition-colors">
+<span class="material-symbols-outlined !text-lg">visibility</span>
+</button>
+</div>
+<!-- Password strength indicator -->
+<div id="passwordMeter" class="mt-2 hidden">
+<div class="flex gap-1 mb-2">
+<div class="h-1 flex-1 rounded-full bg-slate-200" id="meter1"></div>
+<div class="h-1 flex-1 rounded-full bg-slate-200" id="meter2"></div>
+<div class="h-1 flex-1 rounded-full bg-slate-200" id="meter3"></div>
+<div class="h-1 flex-1 rounded-full bg-slate-200" id="meter4"></div>
+</div>
+<ul class="text-xs space-y-1">
+<li id="req-length" class="flex items-center gap-1.5 text-slate-400"><span class="w-3.5 h-3.5 rounded-full border border-slate-300 flex items-center justify-center text-[8px]"></span>9+ characters</li>
+<li id="req-upper" class="flex items-center gap-1.5 text-slate-400"><span class="w-3.5 h-3.5 rounded-full border border-slate-300 flex items-center justify-center text-[8px]"></span>Uppercase letter</li>
+<li id="req-lower" class="flex items-center gap-1.5 text-slate-400"><span class="w-3.5 h-3.5 rounded-full border border-slate-300 flex items-center justify-center text-[8px]"></span>Lowercase letter</li>
+<li id="req-special" class="flex items-center gap-1.5 text-slate-400"><span class="w-3.5 h-3.5 rounded-full border border-slate-300 flex items-center justify-center text-[8px]"></span>Special character</li>
+</ul>
+</div>
+</label>
+<label class="flex flex-col w-full">
+<div class="flex justify-between items-center pb-2">
+<span class="text-slate-700 text-sm font-semibold">Re-enter Password</span>
+<span id="confirmStatus" class="validation-status text-xs font-medium hidden"></span>
+</div>
+<div class="relative">
+<input id="confirmPassword" class="form-input flex w-full rounded-lg text-slate-800 focus:outline-0 focus:ring-2 focus:ring-primary/20 border border-primary/10 bg-background-main h-11 sm:h-12 placeholder:text-slate-400 p-3 sm:p-4 pr-10 text-sm sm:text-base font-normal leading-normal transition-all duration-200" placeholder="Re-enter password" type="password"/>
+<span id="confirmIcon" class="validation-icon absolute right-3 top-1/2 -translate-y-1/2 hidden">
+</span>
+</div>
+</label>
+<button class="w-full bg-primary hover:bg-primary/90 text-white font-bold py-3 sm:py-3.5 rounded-lg transition-all shadow-lg shadow-primary/20 mt-2 text-sm sm:text-base" type="submit">
+                            SIGN UP
+                        </button>
+</form>
+<div class="mt-10 text-center">
+<p class="text-slate-500 text-sm">
+                            Already have an account? 
+                            <a class="text-primary font-bold hover:underline ml-1" href="login.html">Login</a>
+</p>
+</div>
+</div>
+</main>
+<footer class="p-4 sm:p-6 text-center">
+<p class="text-slate-400 text-xs">
+                    &copy; 2024 LogisticsPro Inventory Systems. All rights reserved.
+                </p>
+</footer>
+</div>
+</div>
+
+<script>
+    const API_URL = 'http://localhost:3000';
+    
+    // Debounce function for API calls
+    function debounce(func, wait) {
+        let timeout;
+        return function executedFunction(...args) {
+            const later = () => {
+                clearTimeout(timeout);
+                func(...args);
+            };
+            clearTimeout(timeout);
+            timeout = setTimeout(later, wait);
+        };
+    }
+    
+    // Validation state
+    const validationState = {
+        loginId: false,
+        email: false,
+        password: false,
+        confirmPassword: false
+    };
+    
+    // Helper functions for visual feedback
+    function setValid(input, icon, status, message) {
+        input.classList.remove('border-red-400', 'border-primary/10');
+        input.classList.add('border-green-400');
+        if (icon) {
+            icon.classList.remove('hidden');
+            icon.innerHTML = '<svg class="w-5 h-5 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>';
+        }
+        if (status) {
+            status.classList.remove('hidden', 'text-red-500');
+            status.classList.add('text-green-500');
+            status.textContent = message || 'Available';
+        }
+    }
+    
+    function setInvalid(input, icon, status, message) {
+        input.classList.remove('border-green-400', 'border-primary/10');
+        input.classList.add('border-red-400');
+        if (icon) {
+            icon.classList.remove('hidden');
+            icon.innerHTML = '<svg class="w-5 h-5 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>';
+        }
+        if (status) {
+            status.classList.remove('hidden', 'text-green-500');
+            status.classList.add('text-red-500');
+            status.textContent = message || 'Invalid';
+        }
+    }
+    
+    function setNeutral(input, icon, status) {
+        input.classList.remove('border-green-400', 'border-red-400');
+        input.classList.add('border-primary/10');
+        if (icon) icon.classList.add('hidden');
+        if (status) status.classList.add('hidden');
+    }
+    
+    function setChecking(input, icon, status) {
+        input.classList.remove('border-green-400', 'border-red-400');
+        input.classList.add('border-yellow-400');
+        if (icon) {
+            icon.classList.remove('hidden');
+            icon.innerHTML = '<svg class="w-5 h-5 text-yellow-500 animate-spin" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path></svg>';
+        }
+        if (status) {
+            status.classList.remove('hidden', 'text-green-500', 'text-red-500');
+            status.classList.add('text-yellow-500');
+            status.textContent = 'Checking...';
+        }
+    }
+    
+    // Login ID validation
+    const loginIdInput = document.getElementById('loginId');
+    const loginIdIcon = document.getElementById('loginIdIcon');
+    const loginIdStatus = document.getElementById('loginIdStatus');
+    const loginIdHint = document.getElementById('loginIdHint');
+    
+    const checkLoginId = debounce(async (value) => {
+        if (!value) {
+            setNeutral(loginIdInput, loginIdIcon, loginIdStatus);
+            validationState.loginId = false;
+            return;
+        }
+        
+        // Check format first
+        if (value.length < 6 || value.length > 12 || !/^[a-zA-Z0-9]+$/.test(value)) {
+            setInvalid(loginIdInput, loginIdIcon, loginIdStatus, '6-12 alphanumeric chars');
+            validationState.loginId = false;
+            return;
+        }
+        
+        // Check availability via API
+        setChecking(loginIdInput, loginIdIcon, loginIdStatus);
+        
+        try {
+            const response = await fetch(`${API_URL}/api/check-login-id/${encodeURIComponent(value)}`);
+            const data = await response.json();
+            
+            if (data.available) {
+                setValid(loginIdInput, loginIdIcon, loginIdStatus, 'Available');
+                validationState.loginId = true;
+            } else if (data.reason === 'taken') {
+                setInvalid(loginIdInput, loginIdIcon, loginIdStatus, 'Already taken');
+                validationState.loginId = false;
+            } else {
+                setInvalid(loginIdInput, loginIdIcon, loginIdStatus, 'Invalid format');
+                validationState.loginId = false;
+            }
+        } catch (error) {
+            setNeutral(loginIdInput, loginIdIcon, loginIdStatus);
+            validationState.loginId = false;
+        }
+    }, 300);
+    
+    loginIdInput.addEventListener('input', (e) => {
+        loginIdHint.classList.remove('hidden');
+        checkLoginId(e.target.value.trim());
+    });
+    
+    loginIdInput.addEventListener('focus', () => {
+        loginIdHint.classList.remove('hidden');
+    });
+    
+    // Email validation
+    const emailInput = document.getElementById('email');
+    const emailIcon = document.getElementById('emailIcon');
+    const emailStatus = document.getElementById('emailStatus');
+    
+    const checkEmail = debounce(async (value) => {
+        if (!value) {
+            setNeutral(emailInput, emailIcon, emailStatus);
+            validationState.email = false;
+            return;
+        }
+        
+        // Check format first
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(value)) {
+            setInvalid(emailInput, emailIcon, emailStatus, 'Invalid email');
+            validationState.email = false;
+            return;
+        }
+        
+        // Check availability via API
+        setChecking(emailInput, emailIcon, emailStatus);
+        
+        try {
+            const response = await fetch(`${API_URL}/api/check-email/${encodeURIComponent(value)}`);
+            const data = await response.json();
+            
+            if (data.available) {
+                setValid(emailInput, emailIcon, emailStatus, 'Available');
+                validationState.email = true;
+            } else if (data.reason === 'taken') {
+                setInvalid(emailInput, emailIcon, emailStatus, 'Already registered');
+                validationState.email = false;
+            } else {
+                setInvalid(emailInput, emailIcon, emailStatus, 'Invalid email');
+                validationState.email = false;
+            }
+        } catch (error) {
+            setNeutral(emailInput, emailIcon, emailStatus);
+            validationState.email = false;
+        }
+    }, 300);
+    
+    emailInput.addEventListener('input', (e) => {
+        checkEmail(e.target.value.trim());
+    });
+    
+    // Password validation with strength meter
+    const passwordInput = document.getElementById('password');
+    const passwordStrength = document.getElementById('passwordStrength');
+    const passwordMeter = document.getElementById('passwordMeter');
+    const passwordToggle = document.getElementById('passwordToggle');
+    const meter1 = document.getElementById('meter1');
+    const meter2 = document.getElementById('meter2');
+    const meter3 = document.getElementById('meter3');
+    const meter4 = document.getElementById('meter4');
+    
+    const reqLength = document.getElementById('req-length');
+    const reqUpper = document.getElementById('req-upper');
+    const reqLower = document.getElementById('req-lower');
+    const reqSpecial = document.getElementById('req-special');
+    
+    function updatePasswordStrength(password) {
+        let score = 0;
+        const checks = {
+            length: password.length >= 9,
+            upper: /[A-Z]/.test(password),
+            lower: /[a-z]/.test(password),
+            special: /[\W_]/.test(password)
+        };
+        
+        // Update requirement indicators
+        function updateReq(element, passed) {
+            const circle = element.querySelector('span');
+            if (passed) {
+                element.classList.remove('text-slate-400');
+                element.classList.add('text-green-600');
+                circle.innerHTML = '<svg class="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>';
+                circle.classList.remove('border', 'border-slate-300');
+                circle.classList.add('bg-green-500');
+            } else {
+                element.classList.remove('text-green-600');
+                element.classList.add('text-slate-400');
+                circle.innerHTML = '';
+                circle.classList.remove('bg-green-500');
+                circle.classList.add('border', 'border-slate-300');
+            }
+        }
+        
+        updateReq(reqLength, checks.length);
+        updateReq(reqUpper, checks.upper);
+        updateReq(reqLower, checks.lower);
+        updateReq(reqSpecial, checks.special);
+        
+        // Calculate score
+        if (checks.length) score++;
+        if (checks.upper) score++;
+        if (checks.lower) score++;
+        if (checks.special) score++;
+        
+        // Update meter bars
+        const meters = [meter1, meter2, meter3, meter4];
+        const colors = ['bg-red-500', 'bg-orange-500', 'bg-yellow-500', 'bg-green-500'];
+        const strengthTexts = ['Weak', 'Fair', 'Good', 'Strong'];
+        
+        meters.forEach((meter, i) => {
+            meter.classList.remove('bg-red-500', 'bg-orange-500', 'bg-yellow-500', 'bg-green-500');
+            if (i < score) {
+                meter.classList.add(colors[Math.min(score - 1, 3)]);
+            } else {
+                meter.classList.add('bg-slate-200');
+            }
+        });
+        
+        // Update strength text
+        if (password) {
+            passwordStrength.classList.remove('hidden');
+            const strengthColor = ['text-red-500', 'text-orange-500', 'text-yellow-600', 'text-green-500'];
+            passwordStrength.className = `text-xs font-medium ${strengthColor[Math.min(score - 1, 3)] || 'text-slate-400'}`;
+            passwordStrength.textContent = strengthTexts[score - 1] || 'Too weak';
+        } else {
+            passwordStrength.classList.add('hidden');
+        }
+        
+        // Check if all requirements met
+        validationState.password = checks.length && checks.upper && checks.lower && checks.special;
+        
+        return validationState.password;
+    }
+    
+    passwordInput.addEventListener('input', (e) => {
+        passwordMeter.classList.remove('hidden');
+        updatePasswordStrength(e.target.value);
+        
+        // Also check confirm password if it has value
+        if (confirmPasswordInput.value) {
+            validateConfirmPassword();
+        }
+    });
+    
+    passwordInput.addEventListener('focus', () => {
+        if (passwordInput.value) {
+            passwordMeter.classList.remove('hidden');
+        }
+    });
+    
+    // Password visibility toggle
+    passwordToggle.addEventListener('click', () => {
+        const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+        passwordInput.setAttribute('type', type);
+        const icon = passwordToggle.querySelector('span');
+        icon.textContent = type === 'text' ? 'visibility_off' : 'visibility';
+    });
+    
+    // Confirm password validation
+    const confirmPasswordInput = document.getElementById('confirmPassword');
+    const confirmIcon = document.getElementById('confirmIcon');
+    const confirmStatus = document.getElementById('confirmStatus');
+    
+    function validateConfirmPassword() {
+        const password = passwordInput.value;
+        const confirmPassword = confirmPasswordInput.value;
+        
+        if (!confirmPassword) {
+            setNeutral(confirmPasswordInput, confirmIcon, confirmStatus);
+            validationState.confirmPassword = false;
+            return;
+        }
+        
+        if (password === confirmPassword) {
+            setValid(confirmPasswordInput, confirmIcon, confirmStatus, 'Match');
+            validationState.confirmPassword = true;
+        } else {
+            setInvalid(confirmPasswordInput, confirmIcon, confirmStatus, 'No match');
+            validationState.confirmPassword = false;
+        }
+    }
+    
+    confirmPasswordInput.addEventListener('input', validateConfirmPassword);
+    
+    // Form submission
+    const signupForm = document.getElementById('signupForm');
+    
+    signupForm.addEventListener('submit', async function(e) {
+        e.preventDefault();
+        
+        // Final validation check
+        if (!validationState.loginId || !validationState.email || !validationState.password || !validationState.confirmPassword) {
+            showError('Please fix all validation errors before submitting');
+            return;
+        }
+        
+        const loginId = loginIdInput.value.trim();
+        const email = emailInput.value.trim();
+        const password = passwordInput.value;
+        
+        // Submit to backend API
+        const submitButton = document.querySelector('button[type="submit"]');
+        submitButton.textContent = 'Creating Account...';
+        submitButton.disabled = true;
+        
+        try {
+            const response = await fetch(`${API_URL}/api/signup`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ login_id: loginId, email, password })
+            });
+            
+            const data = await response.json();
+            
+            if (!response.ok) {
+                showError(data.error || 'Signup failed');
+                submitButton.textContent = 'SIGN UP';
+                submitButton.disabled = false;
+                return;
+            }
+            
+            // Show success message
+            const successDiv = document.createElement('div');
+            successDiv.className = 'success-message bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded-lg mb-4 text-sm animate-fade-in';
+            successDiv.textContent = 'Account created successfully! Redirecting to login...';
+            
+            const form = document.querySelector('form');
+            form.insertBefore(successDiv, form.firstChild);
+            
+            // Redirect to login after 2 seconds
+            setTimeout(() => {
+                window.location.href = 'login.html';
+            }, 2000);
+            
+        } catch (error) {
+            showError('Server error. Ensure backend is running.');
+            submitButton.textContent = 'SIGN UP';
+            submitButton.disabled = false;
+        }
+    });
+    
+    function showError(message) {
+        const existingError = document.querySelector('.error-message');
+        if (existingError) existingError.remove();
+        
+        const errorDiv = document.createElement('div');
+        errorDiv.className = 'error-message bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg mb-4 text-sm animate-shake';
+        errorDiv.textContent = message;
+        
+        const form = document.querySelector('form');
+        form.insertBefore(errorDiv, form.firstChild);
+        
+        setTimeout(() => errorDiv.remove(), 5000);
+    }
+</script>
+
+</body></html>
